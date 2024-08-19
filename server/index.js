@@ -1,38 +1,13 @@
 const { ApolloServer }  = require('@apollo/server');
 const { startStandaloneServer } = require('@apollo/server/standalone');
 
-const typeDefs = `#graphql
-  type Book {
-    title: String
-    author: String
-  }
+const userTypeDefs = require("./schema/user")
+const userResolvers = require("./resolvers/user")
 
-  # The "Query" type is special: it lists all of the available queries 
-  type Query {
-    books: [Book]
-  }
-`;
-
-const books = [
-  {
-    title: 'The Awakening',
-    author: 'Kate Chopin',
-  },
-  {
-    title: 'City of Glass',
-    author: 'Paul Auster',
-  },
-];
-
-const resolvers = {
-  Query: {
-    books: () => books,
-  },
-};
 
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+  typeDefs: [userTypeDefs],
+  resolvers: [userResolvers],
 });
 
 startStandaloneServer(server, {
