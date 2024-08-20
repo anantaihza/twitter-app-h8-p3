@@ -10,6 +10,15 @@ const followTypeDefs = `#graphql
   type Query {
     follows: [Follow]
   }
+
+  input newFollow {
+    followingId: ID!
+    # followerId: ID!
+  }
+
+  type Mutation {
+    AddFollow(newFollow: newFollow): Follow
+  }
 `;
 
 module.exports = followTypeDefs;

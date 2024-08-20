@@ -1,3 +1,5 @@
+const { ObjectId } = require('mongodb');
+
 const follows = [
   {
     _id: '1',
@@ -17,7 +19,30 @@ const follows = [
 
 const resolvers = {
   Query: {
-    follows: () => follows
+    follows: () => follows,
+  },
+  Mutation: {
+    async AddFollow(_, args, contextValue) {
+      const { newFollow } = args;
+      const { db, authentication } = contextValue;
+
+      const user = await authentication();
+      if (!user) throw new Error('Authentication failed');
+
+      console.log(user);
+
+      // 66c31bb47c8fa33dcb8a3b3d
+      const dataFollow = {
+        followingId: new ObjectId(newFollow.followingId),
+        followerId: new ObjectId(user.id),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+
+      const data = await db.collection('Follows').insertOne(dataFollow);
+
+      return { ...dataFollow, _id: data.insertedId };
+    },
   },
 };
 
