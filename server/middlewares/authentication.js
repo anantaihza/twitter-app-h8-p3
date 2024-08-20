@@ -22,6 +22,7 @@ async function authentication(req, db) {
 
   const data = {
     id: user._id,
+    username: user.username
   };
 
   // console.log(data)
