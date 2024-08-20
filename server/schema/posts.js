@@ -28,27 +28,25 @@ const postsTypeDefs = `#graphql
     posts: [Post]
   }
 
-  # input newComment {
-  #   content: String
-  #   username: String
-  #   # createdAt: String
-  #   # updatedAt: String
-  # }
+  input newComment {
+    content: String!
+  }
+
   # input newLike {
-  #   username: String
+  #   username: String!
   # }
 
   input newPost {
     content: String!
     tags: [String]
     imgUrl: String
-    # authorId: ID!
-    # createdAt: String
-    # updatedAt: String
   }
 
   type Mutation {
     AddPost(newPost: newPost): Post
+    AddComment(newComment: newComment): Comment
+    AddLike: Like
+    # AddLike(newLike: newLike): Like
   }
 `;
 
