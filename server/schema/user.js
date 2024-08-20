@@ -2,8 +2,18 @@ const userTypeDefs = `#graphql
   type User {
     _id: ID
     name: String
+    username: String
+    email: String
+  }
+
+
+  type UserById {
+    _id: ID
+    name: String
     username: String!
     email: String!
+    followers: [Follow]
+    followings: [Follow]
   }
 
   type accessToken {
@@ -12,7 +22,7 @@ const userTypeDefs = `#graphql
 
   # The "Query" type is special: it lists all of the available queries 
   type Query {
-    users: [User]
+    user(userId: ID!): UserById
   }
 
   input newUser {

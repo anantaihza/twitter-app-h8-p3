@@ -1,29 +1,10 @@
 const { ObjectId } = require('mongodb');
 
-const follows = [
-  {
-    _id: '1',
-    followingId: '1',
-    followersId: '2',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    _id: '2',
-    followingId: '2',
-    followersId: '1',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-];
-
 const resolvers = {
-  Query: {
-    follows: () => follows,
-  },
+  Query: {},
   Mutation: {
     async AddFollow(_, args, contextValue) {
-      const { newFollow } = args;
+      const { followingId } = args;
       const { db, authentication } = contextValue;
 
       const user = await authentication();
@@ -31,9 +12,24 @@ const resolvers = {
 
       console.log(user);
 
+      console.log(user.id);
+      console.log();
+
+      if (followingId === user.id.toString())
+        throw new Error('You cant follow yourself');
+
+      const findFollow = await db.collection('Follows').findOne({
+        $and: [
+          { followingId: new ObjectId(followingId) },
+          { followerId: new ObjectId(user.id) },
+        ],
+      });
+
+      if (findFollow) throw new Error('You already follow');
+
       // 66c31bb47c8fa33dcb8a3b3d
       const dataFollow = {
-        followingId: new ObjectId(newFollow.followingId),
+        followingId: new ObjectId(followingId),
         followerId: new ObjectId(user.id),
         createdAt: new Date(),
         updatedAt: new Date(),

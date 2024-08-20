@@ -11,6 +11,12 @@ const postsTypeDefs = `#graphql
     createdAt: String
     updatedAt: String
   }
+
+  type Author {
+    name: String!
+    username: String!
+    email: String!
+  }
   
   type Post {
     _id: ID
@@ -18,6 +24,7 @@ const postsTypeDefs = `#graphql
     tags: [String]
     imgUrl: String
     authorId: ID!
+    author: Author
     comments: [Comment]
     likes: [Like]
     createdAt: String
@@ -26,15 +33,8 @@ const postsTypeDefs = `#graphql
 
   type Query {
     posts: [Post]
+    post(postId: ID!): Post
   }
-
-  input newComment {
-    content: String!
-  }
-
-  # input newLike {
-  #   username: String!
-  # }
 
   input newPost {
     content: String!
@@ -44,9 +44,8 @@ const postsTypeDefs = `#graphql
 
   type Mutation {
     AddPost(newPost: newPost): Post
-    AddComment(newComment: newComment): Comment
-    AddLike: Like
-    # AddLike(newLike: newLike): Like
+    AddComment(postId: ID!, content: String!): Comment
+    AddLike(postId: ID!): Like
   }
 `;
 

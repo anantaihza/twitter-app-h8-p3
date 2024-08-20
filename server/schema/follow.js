@@ -5,19 +5,15 @@ const followTypeDefs = `#graphql
     followerId: ID
     createdAt: String
     updatedAt: String
+    user: User
   }
 
   type Query {
     follows: [Follow]
   }
 
-  input newFollow {
-    followingId: ID!
-    # followerId: ID!
-  }
-
   type Mutation {
-    AddFollow(newFollow: newFollow): Follow
+    AddFollow(followingId: ID!): Follow
   }
 `;
 

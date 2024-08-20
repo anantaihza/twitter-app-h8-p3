@@ -33,7 +33,7 @@ const server = new ApolloServer({
       context: ({ req, res }) => {
         return {
           db,
-          authentication: () => authentication(req, db)
+          authentication: async () => await authentication(req, db)
         };
       },
     });
@@ -44,6 +44,8 @@ const server = new ApolloServer({
   }
 })();
 
+
+// ? Contoh menggunakan then
 // startStandaloneServer(server, {
 //   listen: { port: 4000 },
 //   // context: ({ req, res }) => {

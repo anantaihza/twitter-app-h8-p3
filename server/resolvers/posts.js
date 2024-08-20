@@ -4,25 +4,83 @@ const { ObjectId } = require('mongodb');
 const resolvers = {
   Query: {
     posts: async (_, args, contextValue) => {
-      const { db } = contextValue;
+      const { db, authentication } = contextValue;
 
-      // ! haruskah di authentication
-      // const posts = await db.collection('Posts').find().toArray();
-      const posts = await db.collection('Posts').aggregate([
+      const user = await authentication();
+      // if (!user) throw new Error('Authentication failed');
+
+      // console.log(user)
+
+      const agg = [
+        {
+          $sort: {
+            createdAt: -1,
+          },
+        },
         {
           $lookup: {
-            from: "Users",
-            localField: "authorId",
-            foreignField: "_id",
-            as: "author_profile"
-          }
-        }
-      ]).toArray();
+            from: 'Users',
+            localField: 'authorId',
+            foreignField: '_id',
+            as: 'author',
+          },
+        },
+        {
+          $unwind: {
+            path: '$author',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $project: {
+            'author.password': 0,
+            'author._id': 0,
+          },
+        },
+      ];
 
-      // ! Gimana cara nampilnya??
-      console.log(posts[0].author_profile)
+      const posts = await db.collection('Posts').aggregate(agg).toArray();
 
       return posts;
+    },
+    post: async (_, args, contextValue) => {
+      const { postId } = args;
+      const { db, authentication } = contextValue;
+
+      const user = await authentication();
+
+      const agg = [
+        {
+          $match: {
+            _id: new ObjectId(postId),
+          },
+        },
+        {
+          $lookup: {
+            from: 'Users',
+            localField: 'authorId',
+            foreignField: '_id',
+            as: 'author',
+          },
+        },
+        {
+          $unwind: {
+            path: '$author',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $project: {
+            'author.password': 0,
+            'author._id': 0,
+          },
+        },
+      ];
+
+      const post = await db.collection('Posts').aggregate(agg).toArray();
+      // console.log(post)
+
+      return post[0];
     },
   },
   Mutation: {
@@ -32,9 +90,9 @@ const resolvers = {
 
       // console.log(newPost);
       const user = await authentication();
-      if (!user) throw new Error('Authentication failed');
+      // if (!user) throw new Error('Authentication failed');
 
-      console.log(user);
+      // console.log(user);
 
       const dataNewPost = {
         content: newPost.content,
@@ -54,28 +112,28 @@ const resolvers = {
       return { ...dataNewPost, _id: data.insertedId };
     },
     async AddComment(_, args, contextValue) {
-      const { newComment } = args;
+      const { postId, content } = args;
       const { db, authentication } = contextValue;
 
       const user = await authentication();
-      if (!user) throw new Error('Authentication failed');
+      // if (!user) throw new Error('Authentication failed');
 
-      console.log(user);
+      // console.log(user);
 
       const dataComment = {
-        content: newComment.content,
+        content: content,
         username: user.username,
         createdAt: new Date(),
         updatedAt: new Date(),
       };
 
-      // ! Id Static
-      const idPost = '66c33992ba34546707e27e02';
+      // Id Static
+      // 66c33992ba34546707e27e02
 
       await db
         .collection('Posts')
         .updateOne(
-          { _id: new ObjectId(idPost) },
+          { _id: new ObjectId(postId) },
           { $push: { comments: dataComment } }
         );
 
@@ -86,13 +144,13 @@ const resolvers = {
       };
     },
     async AddLike(_, args, contextValue) {
-      // const { newLike } = args;
+      const { postId } = args;
       const { db, authentication } = contextValue;
 
       const user = await authentication();
-      if (!user) throw new Error('Authentication failed');
+      // if (!user) throw new Error('Authentication failed');
 
-      console.log(user);
+      // console.log(user);
 
       const dataLike = {
         username: user.username,
@@ -100,13 +158,10 @@ const resolvers = {
         updatedAt: new Date(),
       };
 
-      // ! Id Static
-      const idPost = '66c33992ba34546707e27e02';
-
       await db
         .collection('Posts')
         .updateOne(
-          { _id: new ObjectId(idPost) },
+          { _id: new ObjectId(postId) },
           { $push: { likes: dataLike } }
         );
 

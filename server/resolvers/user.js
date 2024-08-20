@@ -1,18 +1,86 @@
 const { GraphQLError } = require('graphql');
 const { hashPassword, comparePassword } = require('../helpers/bcrypt');
 const { signToken } = require('../helpers/jwt');
-
+const { ObjectId } = require('mongodb');
 
 const resolvers = {
-  Query: {},
+  Query: {
+    user: async (_, args, contextValue) => {
+      const { userId } = args;
+      const { db, authentication } = contextValue;
+
+      const user = await authentication();
+
+      const agg = [
+        {
+          $match: {
+            _id: new ObjectId(userId),
+          },
+        },
+        {
+          $lookup: {
+            from: 'Follows',
+            localField: '_id',
+            foreignField: 'followingId',
+            as: 'followers',
+            pipeline: [
+              {
+                $lookup: {
+                  from: 'Users',
+                  localField: 'followerId',
+                  foreignField: '_id',
+                  as: 'user',
+                },
+              },
+              {
+                $unwind: {
+                  path: '$user',
+                  preserveNullAndEmptyArrays: true,
+                },
+              },
+            ],
+          },
+        },
+        {
+          $lookup: {
+            from: 'Follows',
+            localField: '_id',
+            foreignField: 'followerId',
+            as: 'followings',
+            pipeline: [
+              {
+                $lookup: {
+                  from: 'Users',
+                  localField: 'followingId',
+                  foreignField: '_id',
+                  as: 'user',
+                },
+              },
+              {
+                $unwind: {
+                  path: '$user',
+                  preserveNullAndEmptyArrays: true,
+                },
+              },
+            ],
+          },
+        },
+      ];
+      const userData = await db.collection('Users').aggregate(agg).toArray();
+      console.log(userData);
+
+      return userData[0];
+    },
+  },
   Mutation: {
     async Register(_, args, contextValue) {
       // console.log(args);
       const { newUser } = args;
       const { db } = contextValue;
 
-      const validateEmail = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
-      if (!validateEmail.test(newUser.email)) throw new Error("Email is wrong format")
+      const validateEmail = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+      if (!validateEmail.test(newUser.email))
+        throw new Error('Email is wrong format');
 
       const find = await db.collection('Users').findOne({
         $or: [{ email: newUser.email }, { username: newUser.username }],
