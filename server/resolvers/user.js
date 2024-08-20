@@ -71,6 +71,20 @@ const resolvers = {
 
       return userData[0];
     },
+    userSearch: async (_, args, contextValue) => {
+      const { search } = args;
+      const { db, authentication } = contextValue;
+
+      const user = await authentication()
+
+      const dataUsers = await db.collection("Users").find({
+        username: new RegExp(search)
+      }).toArray()
+
+      console.log(dataUsers)
+
+      return dataUsers
+    },
   },
   Mutation: {
     async Register(_, args, contextValue) {

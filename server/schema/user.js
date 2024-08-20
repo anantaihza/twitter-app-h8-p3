@@ -6,7 +6,6 @@ const userTypeDefs = `#graphql
     email: String
   }
 
-
   type UserById {
     _id: ID
     name: String
@@ -23,6 +22,7 @@ const userTypeDefs = `#graphql
   # The "Query" type is special: it lists all of the available queries 
   type Query {
     user(userId: ID!): UserById
+    userSearch(search: String!): [User]
   }
 
   input newUser {

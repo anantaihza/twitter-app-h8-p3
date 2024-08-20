@@ -1,4 +1,5 @@
 const { ObjectId } = require('mongodb');
+const redis = require('../config/redisConfig');
 
 // const posts = [];
 const resolvers = {
@@ -10,6 +11,11 @@ const resolvers = {
       // if (!user) throw new Error('Authentication failed');
 
       // console.log(user)
+
+      const postsCache = await redis.get('post:all');
+      if (postsCache) {
+        return JSON.parse(postsCache);
+      }
 
       const agg = [
         {
@@ -40,6 +46,7 @@ const resolvers = {
       ];
 
       const posts = await db.collection('Posts').aggregate(agg).toArray();
+      await redis.set('post:all', JSON.stringify(posts));
 
       return posts;
     },
@@ -106,6 +113,7 @@ const resolvers = {
       };
 
       const data = await db.collection('Posts').insertOne(dataNewPost);
+      await redis.del('post:all');
 
       // console.log(data)
 
@@ -127,9 +135,6 @@ const resolvers = {
         updatedAt: new Date(),
       };
 
-      // Id Static
-      // 66c33992ba34546707e27e02
-
       await db
         .collection('Posts')
         .updateOne(
@@ -137,11 +142,11 @@ const resolvers = {
           { $push: { comments: dataComment } }
         );
 
+      await redis.del('post:all');
+
       // console.log(data);
 
-      return {
-        ...dataComment,
-      };
+      return dataComment;
     },
     async AddLike(_, args, contextValue) {
       const { postId } = args;
@@ -158,6 +163,18 @@ const resolvers = {
         updatedAt: new Date(),
       };
 
+      
+      const post = await db.collection("Posts").findOne({
+        _id: new ObjectId(postId)
+      })
+
+      post.likes.forEach(el => {
+        if (el.username === user.username) {
+          throw new Error("You cannot like this post twice")
+        }
+      });
+
+
       await db
         .collection('Posts')
         .updateOne(
@@ -165,9 +182,9 @@ const resolvers = {
           { $push: { likes: dataLike } }
         );
 
-      return {
-        ...dataLike,
-      };
+      await redis.del('post:all');
+
+      return dataLike;
     },
   },
 };
