@@ -2,41 +2,18 @@ const { GraphQLError } = require('graphql');
 const { hashPassword, comparePassword } = require('../helpers/bcrypt');
 const { signToken } = require('../helpers/jwt');
 
-const users = [
-  {
-    _id: '1',
-    name: 'User 1',
-    username: 'user1',
-    email: 'user1@mail.com',
-    password: '1234',
-  },
-  {
-    _id: '2',
-    name: 'User 2',
-    username: 'user2',
-    email: 'user2@mail.com',
-    password: '1234',
-  },
-  {
-    _id: '3',
-    name: 'User 3',
-    username: 'user3',
-    email: 'user3@mail.com',
-    password: '1234',
-  },
-];
 
 const resolvers = {
-  Query: {
-    users: () => users,
-  },
+  Query: {},
   Mutation: {
     async Register(_, args, contextValue) {
       // console.log(args);
       const { newUser } = args;
       const { db } = contextValue;
+
       const validateEmail = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
       if (!validateEmail.test(newUser.email)) throw new Error("Email is wrong format")
+
       const find = await db.collection('Users').findOne({
         $or: [{ email: newUser.email }, { username: newUser.username }],
       });
@@ -60,8 +37,9 @@ const resolvers = {
         email: newUser.email,
       };
     },
+
     async Login(_, args, contextValue) {
-      const { email, password } = args.loginUser;
+      const { email, password } = args;
       const { db } = contextValue;
 
       if (!email || !password) throw new Error('Email / Password is required');

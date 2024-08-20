@@ -6,7 +6,7 @@ const userTypeDefs = `#graphql
     email: String!
   }
 
-  type UserLogin {
+  type accessToken {
     access_token: String!
   }
 
@@ -22,14 +22,9 @@ const userTypeDefs = `#graphql
     password: String!
   }
 
-  input loginUser {
-    email: String!
-    password: String!
-  }
-
   type Mutation {
     Register(newUser: newUser): User
-    Login(loginUser: loginUser): UserLogin
+    Login(email: String!, password: String!): accessToken
   }
 `;
 
