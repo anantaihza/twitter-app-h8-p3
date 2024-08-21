@@ -9,7 +9,9 @@ export default function App() {
     <SafeAreaProvider>
       <SafeAreaView style={styles.containerSafeArea}>
         <StatusBar style="auto" />
-        <Register />
+        {/* <Register /> */}
+        <Login />
+        
       </SafeAreaView>
     </SafeAreaProvider>
   );

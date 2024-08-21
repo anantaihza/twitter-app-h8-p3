@@ -57,7 +57,7 @@ export default function Register() {
         </View>
 
         <TouchableHighlight onPress={handleRegister} style={styles.btnOutline}>
-          <Text style={styles.btnTextOutline}>Create new Account</Text>
+          <Text style={styles.btnTextOutline}>Login to your account</Text>
         </TouchableHighlight>
       </View>
     </TouchableWithoutFeedback>
@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
   },
   subHeading: {
     color: '#9D9D9D',
+    marginBottom: 5
   },
   input: {
     height: 54,
