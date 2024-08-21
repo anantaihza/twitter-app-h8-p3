@@ -71,7 +71,9 @@ const resolvers = {
       const dataUsers = await db
         .collection('Users')
         .find({
-          username: new RegExp(search),
+          username: {
+            $regex: search, $options: "i"
+          },
         })
         .toArray();
 
