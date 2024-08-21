@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import {
   Text,
   StyleSheet,
@@ -10,7 +11,10 @@ import {
 } from 'react-native';
 
 export default function Login() {
-  const handleRegister = () => {};
+  const navigation = useNavigation()
+  const handleRegister = () => {
+    navigation.navigate("Tab")
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -42,7 +46,7 @@ export default function Login() {
           </TouchableHighlight>
         </View>
 
-        <TouchableHighlight onPress={handleRegister} style={styles.btnOutline}>
+        <TouchableHighlight onPress={() => navigation.navigate("Register")} style={styles.btnOutline}>
           <Text style={styles.btnTextOutline}>Create new account</Text>
         </TouchableHighlight>
       </View>

@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import {
   Text,
   StyleSheet,
@@ -10,6 +11,7 @@ import {
 } from 'react-native';
 
 export default function Register() {
+  const navigation = useNavigation()
   const handleRegister = () => {};
 
   return (
@@ -56,7 +58,7 @@ export default function Register() {
           </TouchableHighlight>
         </View>
 
-        <TouchableHighlight onPress={handleRegister} style={styles.btnOutline}>
+        <TouchableHighlight onPress={() => navigation.navigate("Login")} style={styles.btnOutline}>
           <Text style={styles.btnTextOutline}>Login to your account</Text>
         </TouchableHighlight>
       </View>
@@ -108,7 +110,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     alignItems: 'center',
     position: "relative",
-    bottom: -100,
+    bottom: -50,
   },
   btnTextSolid: {
     color: '#FFFFFF',
