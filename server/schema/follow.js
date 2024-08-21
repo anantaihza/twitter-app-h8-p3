@@ -8,12 +8,12 @@ const followTypeDefs = `#graphql
     user: User
   }
 
-  type Query {
-    follows: [Follow]
-  }
+  # type Query {
+  #   follows: [Follow]
+  # }
 
   type Mutation {
-    AddFollow(followingId: ID!): Follow
+    Follow(followingId: ID!): Follow
   }
 `;
 

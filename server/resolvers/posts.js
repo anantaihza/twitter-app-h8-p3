@@ -4,7 +4,7 @@ const redis = require('../config/redisConfig');
 // const posts = [];
 const resolvers = {
   Query: {
-    posts: async (_, args, contextValue) => {
+    GetPosts: async (_, args, contextValue) => {
       const { db, authentication } = contextValue;
 
       const user = await authentication();
@@ -119,7 +119,7 @@ const resolvers = {
 
       return { ...dataNewPost, _id: data.insertedId };
     },
-    async AddComment(_, args, contextValue) {
+    async CommentPost(_, args, contextValue) {
       const { postId, content } = args;
       const { db, authentication } = contextValue;
 
@@ -148,7 +148,7 @@ const resolvers = {
 
       return dataComment;
     },
-    async AddLike(_, args, contextValue) {
+    async LikePost(_, args, contextValue) {
       const { postId } = args;
       const { db, authentication } = contextValue;
 

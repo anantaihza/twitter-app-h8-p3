@@ -11,8 +11,8 @@ const userTypeDefs = `#graphql
     name: String
     username: String!
     email: String!
-    followers: [Follow]
-    followings: [Follow]
+    followers: [User]
+    followings: [User]
   }
 
   type accessToken {
@@ -21,8 +21,8 @@ const userTypeDefs = `#graphql
 
   # The "Query" type is special: it lists all of the available queries 
   type Query {
-    user(userId: ID!): UserById
-    userSearch(search: String!): [User]
+    GetUser(userId: ID!): UserById
+    SearchUser(search: String!): [User]
   }
 
   input newUser {

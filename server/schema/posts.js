@@ -32,7 +32,7 @@ const postsTypeDefs = `#graphql
   }
 
   type Query {
-    posts: [Post]
+    GetPosts: [Post]
     post(postId: ID!): Post
   }
 
@@ -44,8 +44,8 @@ const postsTypeDefs = `#graphql
 
   type Mutation {
     AddPost(newPost: newPost): Post
-    AddComment(postId: ID!, content: String!): Comment
-    AddLike(postId: ID!): Like
+    CommentPost(postId: ID!, content: String!): Comment
+    LikePost(postId: ID!): Like
   }
 `;
 

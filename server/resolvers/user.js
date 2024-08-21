@@ -5,7 +5,7 @@ const { ObjectId } = require('mongodb');
 
 const resolvers = {
   Query: {
-    user: async (_, args, contextValue) => {
+    GetUser: async (_, args, contextValue) => {
       const { userId } = args;
       const { db, authentication } = contextValue;
 
@@ -23,22 +23,14 @@ const resolvers = {
             localField: '_id',
             foreignField: 'followingId',
             as: 'followers',
-            pipeline: [
-              {
-                $lookup: {
-                  from: 'Users',
-                  localField: 'followerId',
-                  foreignField: '_id',
-                  as: 'user',
-                },
-              },
-              {
-                $unwind: {
-                  path: '$user',
-                  preserveNullAndEmptyArrays: true,
-                },
-              },
-            ],
+          },
+        },
+        {
+          $lookup: {
+            from: 'Users',
+            localField: 'followers.followerId',
+            foreignField: '_id',
+            as: 'followers',
           },
         },
         {
@@ -47,43 +39,45 @@ const resolvers = {
             localField: '_id',
             foreignField: 'followerId',
             as: 'followings',
-            pipeline: [
-              {
-                $lookup: {
-                  from: 'Users',
-                  localField: 'followingId',
-                  foreignField: '_id',
-                  as: 'user',
-                },
-              },
-              {
-                $unwind: {
-                  path: '$user',
-                  preserveNullAndEmptyArrays: true,
-                },
-              },
-            ],
+          },
+        },
+        {
+          $lookup: {
+            from: 'Users',
+            localField: 'followings.followingId',
+            foreignField: '_id',
+            as: 'followings',
+          },
+        },
+        {
+          $project: {
+            password: 0,
+            'followers.password': 0,
+            'followings.password': 0,
           },
         },
       ];
       const userData = await db.collection('Users').aggregate(agg).toArray();
-      console.log(userData);
+      // console.log(userData);
 
       return userData[0];
     },
-    userSearch: async (_, args, contextValue) => {
+    SearchUser: async (_, args, contextValue) => {
       const { search } = args;
       const { db, authentication } = contextValue;
 
-      const user = await authentication()
+      const user = await authentication();
 
-      const dataUsers = await db.collection("Users").find({
-        username: new RegExp(search)
-      }).toArray()
+      const dataUsers = await db
+        .collection('Users')
+        .find({
+          username: new RegExp(search),
+        })
+        .toArray();
 
-      console.log(dataUsers)
+      console.log(dataUsers);
 
-      return dataUsers
+      return dataUsers;
     },
   },
   Mutation: {

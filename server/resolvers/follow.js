@@ -3,7 +3,7 @@ const { ObjectId } = require('mongodb');
 const resolvers = {
   Query: {},
   Mutation: {
-    async AddFollow(_, args, contextValue) {
+    async Follow(_, args, contextValue) {
       const { followingId } = args;
       const { db, authentication } = contextValue;
 
