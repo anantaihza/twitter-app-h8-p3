@@ -13,7 +13,10 @@ import {
 export default function Profile() {
   return (
     <View>
-      <Text>Profile</Text>
+      <View></View>
+      <View>
+        <Text>Profile Belum</Text>
+      </View>
     </View>
   )
 }

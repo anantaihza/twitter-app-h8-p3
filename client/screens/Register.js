@@ -1,4 +1,6 @@
+import { useMutation } from '@apollo/client';
 import { useNavigation } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
 import {
   Text,
   StyleSheet,
@@ -10,10 +12,42 @@ import {
   TouchableHighlight,
   ScrollView,
 } from 'react-native';
+import { REGISTER } from '../queries/query';
 
 export default function Register() {
-  const navigation = useNavigation()
-  const handleRegister = () => {};
+  const navigation = useNavigation();
+
+  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const [register, { data, loading, error }] = useMutation(REGISTER, {
+    onCompleted: () => {
+      navigation.navigate('Login');
+    },
+  });
+
+  const handleRegister = async () => {
+    try {
+      await register({
+        variables: {
+          newUser: {
+            name,
+            username,
+            email,
+            password,
+          },
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // useEffect(() => {
+  //   console.log(name)
+  // }, [name])
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -29,30 +63,30 @@ export default function Register() {
             style={styles.input}
             placeholder="Name"
             placeholderTextColor={'#4C9EEB'}
-            // onChangeText={onChangeText}
-            // value={text}
+            value={name}
+            onChangeText={(text) => setName(text)}
           />
           <TextInput
             style={styles.input}
             placeholder="Username"
             placeholderTextColor={'#4C9EEB'}
-            // onChangeText={onChangeText}
-            // value={text}
+            value={username}
+            onChangeText={(text) => setUsername(text)}
           />
           <TextInput
             style={styles.input}
             placeholder="Email"
             placeholderTextColor={'#4C9EEB'}
-            // onChangeText={onChangeText}
-            // value={text}
+            value={email}
+            onChangeText={(text) => setEmail(text)}
           />
           <TextInput
             style={styles.input}
             placeholder="Password"
             secureTextEntry={true}
             placeholderTextColor={'#4C9EEB'}
-            // onChangeText={onChangeText}
-            // value={text}
+            value={password}
+            onChangeText={(text) => setPassword(text)}
           />
 
           <TouchableHighlight onPress={handleRegister} style={styles.btnSolid}>
@@ -60,7 +94,10 @@ export default function Register() {
           </TouchableHighlight>
         </View>
 
-        <TouchableHighlight onPress={() => navigation.navigate("Login")} style={styles.btnOutline}>
+        <TouchableHighlight
+          onPress={() => navigation.navigate('Login')}
+          style={styles.btnOutline}
+        >
           <Text style={styles.btnTextOutline}>Login to your account</Text>
         </TouchableHighlight>
       </ScrollView>
@@ -73,7 +110,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 30,
     backgroundColor: '#FFFFFF',
-    position: "relative"
+    position: 'relative',
   },
   logo: {
     marginHorizontal: 'auto',
@@ -86,7 +123,7 @@ const styles = StyleSheet.create({
   },
   subHeading: {
     color: '#9D9D9D',
-    marginBottom: 5
+    marginBottom: 5,
   },
   input: {
     height: 54,
@@ -112,7 +149,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     alignItems: 'center',
     marginTop: 80,
-    marginBottom: 20
+    marginBottom: 20,
     // position: "relative",
     // bottom: -50,
   },

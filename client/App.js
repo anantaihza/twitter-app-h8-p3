@@ -1,69 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
 // import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
-import { NavigationContainer } from '@react-navigation/native';
+import { StyleSheet } from 'react-native';
 
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import MainStack from './screens/MainStack';
 
-import Login from './screens/Login';
-import Register from './screens/Register';
-// import Home from './screens/Home';
-import TabScreen from './screens/TabScreen';
-import DetailPost from './screens/DetailPost';
-import CreatePost from './screens/CreatePost';
-
-const Stack = createNativeStackNavigator();
+import { ApolloProvider } from '@apollo/client';
+import client from './config/apollo';
+import AuthProvider from './contexts/AuthContext';
 
 export default function App() {
   return (
-    <View style={styles.containerSafeArea}>
-      <StatusBar style="auto" />
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Login"
-            component={Login}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Register"
-            component={Register}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Tab"
-            component={TabScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Detail"
-            component={DetailPost}
-            options={{
-              title: 'Post',
-              headerTitleAlign: 'center',
-              headerShadowVisible: false,
-            }}
-          />
-          <Stack.Screen
-            name="Add"
-            component={CreatePost}
-            options={{
-              title: 'Create Post',
-              headerTitleAlign: 'center',
-              headerShadowVisible: false,
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </View>
+    <AuthProvider>
+      <ApolloProvider client={client}>
+        <MainStack />
+      </ApolloProvider>
+    </AuthProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  containerSafeArea: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-  },
-});
+const styles = StyleSheet.create({});

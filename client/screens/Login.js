@@ -1,4 +1,6 @@
+import { useMutation } from '@apollo/client';
 import { useNavigation } from '@react-navigation/native';
+import { useState, useContext } from 'react';
 import {
   Text,
   StyleSheet,
@@ -10,11 +12,38 @@ import {
   TouchableHighlight,
   ScrollView,
 } from 'react-native';
+import { LOGIN } from '../queries/query';
+import * as SecureStore from 'expo-secure-store';
+
+import { AuthContext } from '../contexts/AuthContext';
 
 export default function Login() {
   const navigation = useNavigation();
-  const handleLogin = () => {
-    navigation.navigate('Tab');
+  const { setIsSignedIn } = useContext(AuthContext);
+
+  const [email, setEmail] = useState('user1@mail.com');
+  const [password, setPassword] = useState('1234');
+
+  const [login, { data, loading, error }] = useMutation(LOGIN);
+
+  const handleLogin = async () => {
+    // navigation.navigate('Tab');
+    try {
+      const res = await login({
+        variables: {
+          email,
+          password,
+        },
+      });
+
+      // console.log(res.data.Login.access_token, "<-res login ")
+      const token = res.data.Login.access_token;
+      await SecureStore.setItemAsync("access_token", token)
+
+      setIsSignedIn(true);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -31,16 +60,16 @@ export default function Login() {
             style={styles.input}
             placeholder="Email"
             placeholderTextColor={'#4C9EEB'}
-            // onChangeText={onChangeText}
-            // value={text}
+            value={email}
+            onChangeText={(text) => setEmail(text)}
           />
           <TextInput
             style={styles.input}
             placeholder="Password"
             secureTextEntry={true}
             placeholderTextColor={'#4C9EEB'}
-            // onChangeText={onChangeText}
-            // value={text}
+            value={password}
+            onChangeText={(text) => setPassword(text)}
           />
 
           <TouchableHighlight onPress={handleLogin} style={styles.btnSolid}>
@@ -102,7 +131,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     alignItems: 'center',
     marginTop: 90,
-    marginBottom: 20
+    marginBottom: 20,
   },
   btnTextSolid: {
     color: '#FFFFFF',
