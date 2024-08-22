@@ -13,7 +13,7 @@ import {
 
 export default function Login() {
   const navigation = useNavigation();
-  const handleRegister = () => {
+  const handleLogin = () => {
     navigation.navigate('Tab');
   };
 
@@ -43,7 +43,7 @@ export default function Login() {
             // value={text}
           />
 
-          <TouchableHighlight onPress={handleRegister} style={styles.btnSolid}>
+          <TouchableHighlight onPress={handleLogin} style={styles.btnSolid}>
             <Text style={styles.btnTextSolid}>Login</Text>
           </TouchableHighlight>
         </View>

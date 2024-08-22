@@ -10,6 +10,7 @@ import Register from './screens/Register';
 // import Home from './screens/Home';
 import TabScreen from './screens/TabScreen';
 import DetailPost from './screens/DetailPost';
+import CreatePost from './screens/CreatePost';
 
 const Stack = createNativeStackNavigator();
 
@@ -39,6 +40,15 @@ export default function App() {
             component={DetailPost}
             options={{
               title: 'Post',
+              headerTitleAlign: 'center',
+              headerShadowVisible: false,
+            }}
+          />
+          <Stack.Screen
+            name="Add"
+            component={CreatePost}
+            options={{
+              title: 'Create Post',
               headerTitleAlign: 'center',
               headerShadowVisible: false,
             }}

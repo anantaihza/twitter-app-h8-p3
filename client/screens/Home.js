@@ -10,6 +10,9 @@ import {
   FlatList,
 } from 'react-native';
 import Post from '../components/Post';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import Octicons from '@expo/vector-icons/Octicons';
+import { useNavigation } from '@react-navigation/native';
 
 const DATA = [
   {
@@ -106,15 +109,33 @@ const DATA = [
 ];
 
 export default function Home() {
+  const navigation = useNavigation();
+  const handleLinkAdd = () => {
+    navigation.navigate('Add');
+  }
   return (
-    <FlatList
-      data={DATA}
-      renderItem={({ item }) => {
-        return <Post key={item._id} post={item} />;
-      }}
-      keyExtractor={(item) => item._id}
-    />
+    <>
+      <FlatList
+        data={DATA}
+        renderItem={({ item }) => {
+          return <Post key={item._id} post={item} />;
+        }}
+        keyExtractor={(item) => item._id}
+      />
+      <TouchableHighlight style={styles.addPost} onPress={handleLinkAdd}>
+        <Text><Octicons name="comment-discussion" size={22} color="#FFFFFF" /></Text>
+      </TouchableHighlight>
+    </>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  addPost: {
+    position: "absolute",
+    right: 8,
+    bottom: 8,
+    padding: 18,
+    backgroundColor: "#4C9EEB",
+    borderRadius: 50,
+  }
+});
