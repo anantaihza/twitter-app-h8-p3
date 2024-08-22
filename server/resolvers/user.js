@@ -77,7 +77,7 @@ const resolvers = {
         })
         .toArray();
 
-      console.log(dataUsers);
+      // console.log(dataUsers);
 
       return dataUsers;
     },
