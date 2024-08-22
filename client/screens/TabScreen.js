@@ -16,6 +16,10 @@ export default function TabScreen() {
         name="Home"
         component={Home}
         options={{
+          headerStyle: {
+            height: 80,
+          },
+          headerShadowVisible: false,
           headerTitle: () => {
             return <Image source={require('../assets/icon-twitter.png')} />;
           },
@@ -42,6 +46,10 @@ export default function TabScreen() {
         name="Search"
         component={Search}
         options={{
+          headerStyle: {
+            height: 80,
+          },
+          headerShadowVisible: false,
           headerTitle: () => {
             return <Image source={require('../assets/icon-twitter.png')} />;
           },
@@ -62,6 +70,10 @@ export default function TabScreen() {
         name="Profile"
         component={Profile}
         options={{
+          headerStyle: {
+            height: 80,
+          },
+          headerShadowVisible: false,
           headerTitle: () => {
             return <Image source={require('../assets/icon-twitter.png')} />;
           },

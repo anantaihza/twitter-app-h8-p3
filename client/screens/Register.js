@@ -49,6 +49,7 @@ export default function Register() {
           <TextInput
             style={styles.input}
             placeholder="Password"
+            secureTextEntry={true}
             placeholderTextColor={'#4C9EEB'}
             // onChangeText={onChangeText}
             // value={text}

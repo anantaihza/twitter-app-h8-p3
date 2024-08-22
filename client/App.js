@@ -9,6 +9,7 @@ import Login from './screens/Login';
 import Register from './screens/Register';
 import Home from './screens/Home';
 import TabScreen from './screens/TabScreen';
+import DetailPost from './screens/DetailPost';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,10 +20,30 @@ export default function App() {
         <StatusBar style="auto" />
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen name="Login" component={Login} options={{headerShown: false}} />
-            <Stack.Screen name="Register" component={Register} options={{headerShown: false}} />
-            <Stack.Screen name="Tab" component={TabScreen} options={{headerShown: false}} />
-
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Register"
+              component={Register}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Tab"
+              component={TabScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Detail"
+              component={DetailPost}
+              options={{
+                title: 'Post',
+                headerTitleAlign: 'center',
+                headerShadowVisible: false,
+              }}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>
