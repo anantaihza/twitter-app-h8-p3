@@ -20,8 +20,27 @@ const DATA = [
     imgUrl:
       'https://akcdn.detik.net.id/visual/2019/10/01/2712f2e3-7f33-4322-b4f3-5ceda31fedca_43.png?w=720&q=90',
     authorId: '66c3052529e3d3b8cd502e1f',
-    comments: [],
-    likes: [],
+    comments: [
+      {
+        content: 'Test coba',
+        username: 'user1',
+        createdAt: '2024-08-20T03:13:56.033Z',
+        updatedAt: '2024-08-20T03:13:56.033Z',
+      },
+      {
+        content: 'Test aja',
+        username: 'user2',
+        createdAt: '2024-08-20T03:13:56.033Z',
+        updatedAt: '2024-08-20T03:13:56.033Z',
+      },
+    ],
+    likes: [
+      {
+        username: 'user1',
+        createdAt: '2024-08-20T03:15:28.853Z',
+        updatedAt: '2024-08-20T03:15:28.853Z',
+      },
+    ],
     createdAt: '2024-08-21T08:08:31.599Z',
     updatedAt: '2024-08-21T08:08:31.599Z',
     author: {
@@ -93,7 +112,7 @@ export default function Home() {
       renderItem={({ item }) => {
         return <Post key={item._id} post={item} />;
       }}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item) => item._id}
     />
   );
 }

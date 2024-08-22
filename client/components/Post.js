@@ -10,8 +10,11 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
 
 export default function Post({ post }) {
-  const navigation = useNavigation()
-  const handleDetail = () => navigation.navigate("Detail");
+  const navigation = useNavigation();
+  const handleDetail = () =>
+    navigation.navigate('Detail', {
+      post,
+    });
 
   return (
     <TouchableHighlight
