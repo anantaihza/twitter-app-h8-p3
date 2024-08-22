@@ -8,17 +8,18 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TouchableHighlight,
+  ScrollView,
 } from 'react-native';
 
 export default function Login() {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const handleRegister = () => {
-    navigation.navigate("Tab")
+    navigation.navigate('Tab');
   };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.containerLogin}>
+      <ScrollView style={styles.containerLogin}>
         <Image
           source={require('../assets/logo-twitter.png')}
           style={styles.logo}
@@ -45,11 +46,13 @@ export default function Login() {
             <Text style={styles.btnTextSolid}>Login</Text>
           </TouchableHighlight>
         </View>
-
-        <TouchableHighlight onPress={() => navigation.navigate("Register")} style={styles.btnOutline}>
+        <TouchableHighlight
+          onPress={() => navigation.navigate('Register')}
+          style={styles.btnOutline}
+        >
           <Text style={styles.btnTextOutline}>Create new account</Text>
         </TouchableHighlight>
-      </View>
+      </ScrollView>
     </TouchableWithoutFeedback>
   );
 }
@@ -59,7 +62,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 30,
     backgroundColor: '#FFFFFF',
-    position: 'relative',
+    // position: 'relative',
   },
   logo: {
     marginHorizontal: 'auto',
@@ -72,7 +75,7 @@ const styles = StyleSheet.create({
   },
   subHeading: {
     color: '#9D9D9D',
-    marginBottom: 5
+    marginBottom: 5,
   },
   input: {
     height: 54,
@@ -97,8 +100,8 @@ const styles = StyleSheet.create({
     borderColor: '#4C9EEB',
     borderRadius: 50,
     alignItems: 'center',
-    position: 'relative',
-    bottom: -100,
+    marginTop: 90,
+    marginBottom: 20
   },
   btnTextSolid: {
     color: '#FFFFFF',

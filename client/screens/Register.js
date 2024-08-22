@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TouchableHighlight,
+  ScrollView,
 } from 'react-native';
 
 export default function Register() {
@@ -16,7 +17,7 @@ export default function Register() {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.containerLogin}>
+      <ScrollView style={styles.containerLogin}>
         <Image
           source={require('../assets/logo-twitter.png')}
           style={styles.logo}
@@ -61,7 +62,7 @@ export default function Register() {
         <TouchableHighlight onPress={() => navigation.navigate("Login")} style={styles.btnOutline}>
           <Text style={styles.btnTextOutline}>Login to your account</Text>
         </TouchableHighlight>
-      </View>
+      </ScrollView>
     </TouchableWithoutFeedback>
   );
 }
@@ -109,8 +110,10 @@ const styles = StyleSheet.create({
     borderColor: '#4C9EEB',
     borderRadius: 50,
     alignItems: 'center',
-    position: "relative",
-    bottom: -50,
+    marginTop: 80,
+    marginBottom: 20
+    // position: "relative",
+    // bottom: -50,
   },
   btnTextSolid: {
     color: '#FFFFFF',
