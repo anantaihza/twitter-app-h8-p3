@@ -134,3 +134,38 @@ export const ADD_POST = gql`
     }
   }
 `;
+
+export const GET_USER_ID = gql`
+  query User($userId: ID!) {
+    GetUser(userId: $userId) {
+      _id
+      name
+      username
+      email
+      followers {
+        _id
+        name
+        username
+        email
+      }
+      followings {
+        _id
+        name
+        username
+        email
+      }
+    }
+  }
+`;
+
+export const ADD_FOLLOW = gql`
+  mutation AddFollow($followingId: ID!) {
+    Follow(followingId: $followingId) {
+      _id
+      followingId
+      followerId
+      createdAt
+      updatedAt
+    }
+  }
+`;

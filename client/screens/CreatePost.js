@@ -52,7 +52,7 @@ export default function CreatePost() {
   };
 
   const handleTag = () => {
-    if (inputTag !== "") {
+    if (inputTag !== '') {
       setTags([...tags, inputTag]);
       setInputTag('');
     }

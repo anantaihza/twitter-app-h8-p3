@@ -13,8 +13,10 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useState } from 'react';
 import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
 import { SEARCH } from '../queries/query';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Search() {
+  const navigation = useNavigation();
   const [search, setSearch] = useState('');
   const [getSearch, { data, loading, error }] = useLazyQuery(SEARCH);
   // const { data, loading, error, refetch } = useQuery(SEARCH, {
@@ -32,7 +34,12 @@ export default function Search() {
     });
   };
 
-  const handleUser = () => {};
+  const handleUser = (userId) => {
+    navigation.navigate('Profile', {
+      userId: userId,
+    });
+  };
+
   return (
     <>
       <View style={styles.inputComment}>
@@ -41,6 +48,7 @@ export default function Search() {
           placeholder="Search..."
           value={search}
           onChangeText={(text) => setSearch(text)}
+          onSubmitEditing={handleSearch}
         />
         <TouchableHighlight
           onPress={handleSearch}
@@ -57,7 +65,7 @@ export default function Search() {
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => {
           return (
-            <TouchableHighlight onPress={handleUser}>
+            <TouchableHighlight onPress={() => handleUser(item._id)}>
               <View style={styles.result}>
                 <Text style={styles.resultName}>{item.name}</Text>
                 <Text style={styles.resultUsername}>{item.username}</Text>

@@ -13,6 +13,7 @@ const Stack = createNativeStackNavigator();
 import * as SecureStore from 'expo-secure-store';
 import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
+import Profile from './Profile';
 
 export default function MainStack() {
   const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
@@ -72,6 +73,15 @@ export default function MainStack() {
                 component={CreatePost}
                 options={{
                   title: 'Create Post',
+                  headerTitleAlign: 'center',
+                  headerShadowVisible: false,
+                }}
+              />
+              <Stack.Screen
+                name="Profile"
+                component={Profile}
+                options={{
+                  title: '',
                   headerTitleAlign: 'center',
                   headerShadowVisible: false,
                 }}
