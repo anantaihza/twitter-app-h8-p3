@@ -88,7 +88,7 @@ export default function TabScreen() {
           },
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Profile"
         component={Profile}
         options={{
@@ -109,7 +109,7 @@ export default function TabScreen() {
             }
           },
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 }

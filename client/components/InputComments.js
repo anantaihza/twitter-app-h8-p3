@@ -19,12 +19,14 @@ export default function InputComments({ postId }) {
 
   const handleComment = async () => {
     try {
-      await addComment({
-        variables: {
-          content,
-          postId,
-        },
-      });
+      if (content !== "") {
+        await addComment({
+          variables: {
+            content,
+            postId,
+          },
+        });
+      }
       setContent("")
     } catch (error) {
       console.log(error);
@@ -39,6 +41,7 @@ export default function InputComments({ postId }) {
         // keyboardType=""
         value={content}
         onChangeText={(text) => setContent(text)}
+        onSubmitEditing={handleComment}
       />
       <TouchableHighlight
         onPress={handleComment}

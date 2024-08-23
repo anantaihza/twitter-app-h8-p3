@@ -31,11 +31,11 @@ export default function Home() {
       <FlatList
         data={data?.GetPosts}
         renderItem={({ item }) => {
-          return <Post key={item._id} post={item} />;
+          return <Post post={item} />;
         }}
         keyExtractor={(item, index) => {
-          console.log(item._id.toString())
-          return index + item._id.toString()
+          // console.log(item._id.toString())
+          return item._id.toString()
         }}
       />
       <TouchableHighlight style={styles.addPost} onPress={handleLinkAdd}>

@@ -44,24 +44,27 @@ export default function DetailPost({ route }) {
               @{data?.post?.author.username}
             </Text>
           </View>
-          <View style={styles.postTags}>
-            {data?.post?.tags.map((tag) => {
-              return (
-                <View style={styles.itemTag}>
-                  <Text>{tag}</Text>
-                </View>
-              );
-            })}
-          </View>
+          <Text style={styles.contentDetail}>{data?.post?.content}</Text>
+
+          
           <View>
-            {true ? (
+            {data?.post?.imgUrl ? (
               <Image
                 source={{ uri: data?.post?.imgUrl }}
                 style={styles.postImage}
               />
             ) : null}
           </View>
-          <Text>{data?.post?.content}</Text>
+
+          <View style={styles.postTags}>
+            {data?.post?.tags.map((tag, index) => {
+              return (
+                <View key={index} style={styles.itemTag}>
+                  <Text>{tag}</Text>
+                </View>
+              );
+            })}
+          </View>
           <View style={styles.postCount}>
             <InputLike likes={data?.post?.likes} postId={post._id} />
             <Text style={styles.itemCount}>
@@ -74,9 +77,9 @@ export default function DetailPost({ route }) {
         </View>
         <View style={styles.sectionComments}>
           {/* <Text style={styles.headComment}>Comments: </Text> */}
-          {data?.post?.comments.map((comment) => {
+          {data?.post?.comments.map((comment, index) => {
             return (
-              <View style={styles.listComment}>
+              <View key={index} style={styles.listComment}>
                 <Text style={styles.commentHeader}>{comment.username}</Text>
                 <Text style={styles.commentContent}>{comment.content}</Text>
               </View>
@@ -113,8 +116,14 @@ const styles = StyleSheet.create({
   postTags: {
     flexDirection: 'row',
     gap: 10,
-    marginTop: 20,
+    // marginTop: 10,
     marginBottom: 12,
+    flexWrap: 'wrap',
+
+  },
+  contentDetail: {
+    marginTop: 20,
+    marginBottom: 10
   },
   itemTag: {
     paddingHorizontal: 10,

@@ -45,9 +45,9 @@ export default function Search() {
   const [search, setSearch] = useState('');
   const { data, loading, error, refetch } = useQuery(SEARCH, {
     // manual: true,
-    // variables: {
-    //   search: search === '' ? null : search,
-    // },
+    variables: {
+      search: search === '' ? null : search,
+    },
   });
   // console.log(data?.SearchUser)
 

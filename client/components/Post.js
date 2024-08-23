@@ -29,19 +29,19 @@ export default function Post({ post }) {
           <Text style={styles.authorUsername}>@{post?.author.username}</Text>
         </View>
 
-        <Text>{post?.content}</Text>
+        <Text style={styles.postContent}>{post?.content}</Text>
 
         <View style={styles.postTags}>
-          {post?.tags.map((tag) => {
+          {post?.tags.map((tag, index) => {
             return (
-              <View style={styles.itemTag}>
+              <View key={index} style={styles.itemTag}>
                 <Text>{tag}</Text>
               </View>
             );
           })}
         </View>
         <View>
-          {true ? (
+          {post?.imgUrl ? (
             <Image source={{ uri: post?.imgUrl }} style={styles.postImage} />
           ) : null}
         </View>
@@ -76,6 +76,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 10,
     marginVertical: 14,
+    flexWrap: 'wrap',
+
   },
   itemTag: {
     paddingHorizontal: 10,
@@ -89,6 +91,9 @@ const styles = StyleSheet.create({
     gap: 10,
     marginBottom: 10,
     alignItems: 'center',
+  },
+  postContent: {
+    marginTop: 6
   },
   authorName: {
     fontSize: 20,
