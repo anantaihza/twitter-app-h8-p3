@@ -24,15 +24,15 @@ export default function Post({ post }) {
     >
       <View style={styles.postContainer}>
         <View style={styles.postAuthor}>
-          <Text style={styles.authorName}>{post.author.name}</Text>
+          <Text style={styles.authorName}>{post?.author.name}</Text>
 
-          <Text style={styles.authorUsername}>@{post.author.username}</Text>
+          <Text style={styles.authorUsername}>@{post?.author.username}</Text>
         </View>
 
-        <Text>{post.content}</Text>
+        <Text>{post?.content}</Text>
 
         <View style={styles.postTags}>
-          {post.tags.map((tag) => {
+          {post?.tags.map((tag) => {
             return (
               <View style={styles.itemTag}>
                 <Text>{tag}</Text>
@@ -42,7 +42,7 @@ export default function Post({ post }) {
         </View>
         <View>
           {true ? (
-            <Image source={{ uri: post.imgUrl }} style={styles.postImage} />
+            <Image source={{ uri: post?.imgUrl }} style={styles.postImage} />
           ) : null}
         </View>
         <View style={styles.postAction}>
@@ -52,11 +52,11 @@ export default function Post({ post }) {
             ) : (
               <AntDesign name="hearto" size={16} color="#0C0C0C" />
             )}{' '}
-            {post.likes.length}
+            {post?.likes.length}
           </Text>
           <Text style={styles.postItemAction}>
             <FontAwesome name="comment-o" size={17} color="#0C0C0C" />{' '}
-            {post.comments.length}
+            {post?.comments.length}
           </Text>
         </View>
       </View>
