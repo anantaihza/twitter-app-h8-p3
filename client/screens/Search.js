@@ -11,59 +11,27 @@ import {
 } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useState } from 'react';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
 import { SEARCH } from '../queries/query';
-
-const searchs = [
-  {
-    _id: '66c3052529e3d3b8cd502e1f',
-    name: 'user1',
-    username: 'user1',
-    email: 'user1@mail.com',
-  },
-  {
-    _id: '66c31bb47c8fa33dcb8a3b3d',
-    name: 'user2',
-    username: 'user2',
-    email: 'user2@mail.com',
-  },
-  {
-    _id: '66c48b5240fa26e989301deb',
-    name: 'user3',
-    username: 'user3',
-    email: 'user3@mail.com',
-  },
-  {
-    _id: '66c5a094722ca32ef0aa0d03',
-    name: 'user4',
-    username: 'user4',
-    email: 'user4@mail.com',
-  },
-];
 
 export default function Search() {
   const [search, setSearch] = useState('');
-  const { data, loading, error, refetch } = useQuery(SEARCH, {
-    // manual: true,
-    variables: {
-      search: search === '' ? null : search,
-    },
-  });
-  // console.log(data?.SearchUser)
+  const [getSearch, { data, loading, error }] = useLazyQuery(SEARCH);
+  // const { data, loading, error, refetch } = useQuery(SEARCH, {
+  //   // manual: true,
+  //   variables: {
+  //     search: search === '' ? null : search,
+  //   },
+  // });
 
-  const handleSearch = () => {
-    // refetch()
-    // try {
-    //   await findUsers({
-    //     variables: {
-    //       search,
-    //     },
-    //   });
-    //   console.log(data)
-    // } catch (error) {
-    //   console.log(error);
-    // }
+  const handleSearch = async () => {
+    await getSearch({
+      variables: {
+        search: search === '' ? null : search,
+      },
+    });
   };
+
   const handleUser = () => {};
   return (
     <>
