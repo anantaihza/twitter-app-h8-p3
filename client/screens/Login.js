@@ -21,8 +21,8 @@ export default function Login() {
   const navigation = useNavigation();
   const { setIsSignedIn } = useContext(AuthContext);
 
-  const [email, setEmail] = useState('user1@mail.com');
-  const [password, setPassword] = useState('1234');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const [login, { data, loading, error }] = useMutation(LOGIN);
 
