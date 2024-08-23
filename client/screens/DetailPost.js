@@ -9,23 +9,43 @@ import {
   TouchableHighlight,
   ScrollView,
 } from 'react-native';
-import AntDesign from '@expo/vector-icons/AntDesign';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import { useQuery } from '@apollo/client';
+import { GET_POST_ID, GET_POSTS, ADD_COMMENT } from '../queries/query';
+import InputComments from '../components/InputComments';
+import InputLike from '../components/InputLike';
 // import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 export default function DetailPost({ route }) {
   const { post } = route.params;
-  const handleComment = () => {};
+
+  const { data, loading, error } = useQuery(GET_POST_ID, {
+    variables: {
+      postId: post._id,
+    },
+  });
+
+  // console.log(data);
+
+  if (loading) {
+    return (
+      <View>
+        <Text>Loading</Text>
+      </View>
+    );
+  }
+
   return (
     <>
       <ScrollView style={styles.containerDetail}>
         <View style={styles.post}>
           <View>
-            <Text style={styles.authorName}>{post.author.name}</Text>
-            <Text style={styles.authorUsername}>@{post.author.username}</Text>
+            <Text style={styles.authorName}>{data?.post?.author.name}</Text>
+            <Text style={styles.authorUsername}>
+              @{data?.post?.author.username}
+            </Text>
           </View>
           <View style={styles.postTags}>
-            {post.tags.map((tag) => {
+            {data?.post?.tags.map((tag) => {
               return (
                 <View style={styles.itemTag}>
                   <Text>{tag}</Text>
@@ -35,35 +55,26 @@ export default function DetailPost({ route }) {
           </View>
           <View>
             {true ? (
-              <Image source={{ uri: post.imgUrl }} style={styles.postImage} />
+              <Image
+                source={{ uri: data?.post?.imgUrl }}
+                style={styles.postImage}
+              />
             ) : null}
           </View>
-          <Text>{post.content}</Text>
+          <Text>{data?.post?.content}</Text>
           <View style={styles.postCount}>
-            <View
-              style={{ flexDirection: 'row', gap: 6, alignItems: 'center' }}
-            >
-              <Text style={styles.postItemAction}>
-                {false ? (
-                  <AntDesign name="heart" size={16} color="#4C9EEB" />
-                ) : (
-                  <AntDesign name="hearto" size={16} color="#0C0C0C" />
-                )}
-              </Text>
-              <Text style={styles.itemCount}>
-                <Text style={styles.count}>{post.likes.length}</Text> Likes
-              </Text>
-            </View>
+            <InputLike likes={data?.post?.likes} postId={post._id} />
             <Text style={styles.itemCount}>
-              <Text style={styles.count}>{post.comments.length}</Text> Comments
+              <Text style={styles.count}>{data?.post?.comments.length}</Text>{' '}
+              Comments
             </Text>
           </View>
 
           {/* <View style={styles.postAction}></View> */}
         </View>
         <View style={styles.sectionComments}>
-          <Text style={styles.headComment}>Comments: </Text>
-          {post.comments.map((comment) => {
+          {/* <Text style={styles.headComment}>Comments: </Text> */}
+          {data?.post?.comments.map((comment) => {
             return (
               <View style={styles.listComment}>
                 <Text style={styles.commentHeader}>{comment.username}</Text>
@@ -73,22 +84,7 @@ export default function DetailPost({ route }) {
           })}
         </View>
       </ScrollView>
-      <View style={styles.inputComment}>
-        <TextInput
-          style={styles.input}
-          placeholder="Type comment...."
-          // keyboardType=""
-        />
-        <TouchableHighlight
-          onPress={handleComment}
-          underlayColor="none"
-          activeOpacity={0.5}
-        >
-          <Text style={styles.btnText}>
-            <Ionicons name="send" size={24} color="#4C9EEB" />
-          </Text>
-        </TouchableHighlight>
-      </View>
+      <InputComments postId={post._id} />
     </>
   );
 }
@@ -152,10 +148,7 @@ const styles = StyleSheet.create({
     gap: 20,
     alignItems: 'center',
   },
-  postItemAction: {
-    color: '#0C0C0C',
-    fontSize: 16,
-  },
+
   // Comment
   sectionComments: {
     marginBottom: 50,
@@ -179,22 +172,4 @@ const styles = StyleSheet.create({
   commentContent: {
     color: '#9D9D9D',
   },
-  inputComment: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    height: 50,
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: '#FFFFFF',
-    paddingHorizontal: 20,
-  },
-  input: { 
-    width: 320,
-    height: 50
-  },
-  btnComment: {},
-  btnText: {},
 });
