@@ -32,7 +32,7 @@ export default function Profile({ route }) {
 
         <View style={styles.avatar}></View>
         <View>
-          <Text style={styles.name}>{data.GetUser.name}</Text>
+          <Text style={styles.name}>{data?.GetUser?.name}</Text>
           <Text style={styles.username}>@{data?.GetUser?.username}</Text>
         </View>
         <View style={styles.sectionCount}>
@@ -52,7 +52,7 @@ export default function Profile({ route }) {
         >
           <Text style={styles.textFollow}>Follow</Text>
         </TouchableHighlight> */}
-        <ButtonFollow followId={data.GetUser._id} />
+        <ButtonFollow followId={data?.GetUser?._id} />
       </View>
     </ScrollView>
   );
