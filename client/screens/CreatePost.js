@@ -1,3 +1,5 @@
+import { useMutation } from '@apollo/client';
+import { useState } from 'react';
 import {
   Text,
   StyleSheet,
@@ -8,12 +10,42 @@ import {
   Keyboard,
   TouchableHighlight,
   ScrollView,
+  Button
 } from 'react-native';
+import { ADD_POST, GET_POSTS } from '../queries/query';
+import { useNavigation } from '@react-navigation/native';
 
 export default function CreatePost() {
-  const handleCreate = () => {
+  const navigation = useNavigation();
+  const [content, setContent] = useState('Post Example 1');
+  const [tags, setTags] = useState(['Design', 'Food']);
+  const [tag, setTag] = useState('');
+  const [tagss, setTagss] = useState([]);
+  const [imgUrl, setImgUrl] = useState(
+    'https://cdn0-production-images-kly.akamaized.net/Xc1138UZHofwKdQQRH1C4O0t9EE=/800x450/smart/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/892150/original/048455900_1433335401-kucingmelet5.jpg'
+  );
 
-  }
+  const [addPost, { data, loading, error }] = useMutation(ADD_POST, {
+    refetchQueries: [GET_POSTS],
+    onCompleted: () => navigation.navigate('Home'),
+  });
+
+  const handleCreate = async () => {
+    try {
+      await addPost({
+        variables: {
+          newPost: {
+            content,
+            tags,
+            imgUrl,
+          },
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <View style={styles.containerAdd}>
       <Text style={styles.headingAdd}>New Tweet</Text>
@@ -24,18 +56,39 @@ export default function CreatePost() {
           style={styles.input}
           placeholder="Tweet"
           placeholderTextColor={'#4C9EEB'}
+          value={content}
+          onChangeText={(text) => setContent(text)}
         />
         {/* Tags */}
         <TextInput
           style={styles.input}
           placeholder="Tags"
           placeholderTextColor={'#4C9EEB'}
+          value={tags}
+          onChangeText={(text) => setTags(text)}
         />
+
+{/* BARUUUU ----- */}
+        <TextInput
+          style={styles.input}
+          placeholder="Tag"
+          placeholderTextColor={'#4C9EEB'}
+          value={tag}
+          onChangeText={(text) => setTag(text)}
+        />
+      
+        <Button title='Click' onPress={() => setTagss([...tagss, tag])} />
+        {
+          tagss.map(el => <Text>{el}</Text>)
+        }
+
         {/* ImgUrl */}
         <TextInput
           style={styles.input}
           placeholder="Image Url"
           placeholderTextColor={'#4C9EEB'}
+          value={imgUrl}
+          onChangeText={(text) => setImgUrl(text)}
         />
 
         <TouchableHighlight onPress={handleCreate} style={styles.btnSolid}>

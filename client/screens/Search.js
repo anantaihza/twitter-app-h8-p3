@@ -10,6 +10,9 @@ import {
   FlatList,
 } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useState } from 'react';
+import { useMutation, useQuery } from '@apollo/client';
+import { SEARCH } from '../queries/query';
 
 const searchs = [
   {
@@ -39,12 +42,38 @@ const searchs = [
 ];
 
 export default function Search() {
-  const handleSearch = () => {};
-  const handleUser = () => {}
+  const [search, setSearch] = useState('');
+  const { data, loading, error, refetch } = useQuery(SEARCH, {
+    // manual: true,
+    // variables: {
+    //   search: search === '' ? null : search,
+    // },
+  });
+  // console.log(data?.SearchUser)
+
+  const handleSearch = () => {
+    // refetch()
+    // try {
+    //   await findUsers({
+    //     variables: {
+    //       search,
+    //     },
+    //   });
+    //   console.log(data)
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  };
+  const handleUser = () => {};
   return (
     <>
       <View style={styles.inputComment}>
-        <TextInput style={styles.input} placeholder="Search..." />
+        <TextInput
+          style={styles.input}
+          placeholder="Search..."
+          value={search}
+          onChangeText={(text) => setSearch(text)}
+        />
         <TouchableHighlight
           onPress={handleSearch}
           underlayColor="none"
@@ -56,7 +85,7 @@ export default function Search() {
         </TouchableHighlight>
       </View>
       <FlatList
-        data={searchs}
+        data={data?.SearchUser}
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => {
           return (
