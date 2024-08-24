@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableHighlight,
   FlatList,
+  Image,
 } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useState } from 'react';
@@ -62,8 +63,16 @@ export default function Search() {
           return (
             <TouchableHighlight onPress={() => handleUser(item._id)}>
               <View style={styles.result}>
-                <Text style={styles.resultName}>{item.name}</Text>
-                <Text style={styles.resultUsername}>{item.username}</Text>
+                <Image
+                  style={{ height: 45, width: 45}}
+                  source={{
+                    uri: 'https://www.pngall.com/wp-content/uploads/5/Profile-PNG-File.png',
+                  }}
+                />
+                <View>
+                  <Text style={styles.resultName}>{item.name}</Text>
+                  <Text style={styles.resultUsername}>{item.username}</Text>
+                </View>
               </View>
             </TouchableHighlight>
           );
@@ -95,6 +104,9 @@ const styles = StyleSheet.create({
     borderColor: '#9D9D9D',
     paddingHorizontal: 20,
     paddingVertical: 20,
+    flexDirection: "row",
+    gap: 10,
+    alignItems: "center"
   },
   resultName: {
     fontSize: 14,

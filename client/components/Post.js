@@ -27,7 +27,7 @@ export default function Post({ post }) {
           <Image
             style={{ width: 40, height: 40 }}
             source={{
-              uri: 'https://static.thenounproject.com/png/363639-200.png',
+              uri: 'https://www.pngall.com/wp-content/uploads/5/Profile-PNG-File.png',
             }}
           />
           <View style={{ flex: 1 }}>

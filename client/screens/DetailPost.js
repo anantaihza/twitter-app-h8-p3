@@ -31,7 +31,7 @@ export default function DetailPost({ route }) {
             <Image
               style={{ width: 50, height: 50 }}
               source={{
-                uri: 'https://static.thenounproject.com/png/363639-200.png',
+                uri: 'https://www.pngall.com/wp-content/uploads/5/Profile-PNG-File.png',
               }}
             />
             <View>
@@ -82,7 +82,7 @@ export default function DetailPost({ route }) {
                 <Image
                   style={{ width: 35, height: 35 }}
                   source={{
-                    uri: 'https://static.thenounproject.com/png/363639-200.png',
+                    uri: 'https://www.pngall.com/wp-content/uploads/5/Profile-PNG-File.png',
                   }}
                 />
                 <View style={{ paddingHorizontal: 10 }}>

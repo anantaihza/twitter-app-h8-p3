@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { Text, StyleSheet, View, ScrollView } from 'react-native';
+import { Text, StyleSheet, View, ScrollView, Image } from 'react-native';
 import { GET_USER_ID } from '../queries/query';
 import ButtonFollow from '../components/ButtonFollow';
 
@@ -16,7 +16,8 @@ export default function Profile({ route }) {
     <ScrollView>
       <View style={styles.banner}></View>
       <View style={styles.containerProfile}>
-        <View style={styles.avatar}></View>
+        {/* <View style={styles.avatar}></View> */}
+        <Image style={styles.avatar} source={{uri: "https://www.pngall.com/wp-content/uploads/5/Profile-PNG-File.png"}} />
         <View>
           <Text style={styles.name}>{data?.GetUser?.name}</Text>
           <Text style={styles.username}>@{data?.GetUser?.username}</Text>
@@ -52,12 +53,21 @@ const styles = StyleSheet.create({
   avatar: {
     height: 80,
     width: 80,
-    backgroundColor: '#EFEFEF',
-    borderRadius: 100,
+    // backgroundColor: '#EFEFEF',
+    // borderRadius: 100,
     position: 'absolute',
     top: -40,
     left: 20,
   },
+  // avatar: {
+  //   height: 80,
+  //   width: 80,
+  //   backgroundColor: '#EFEFEF',
+  //   borderRadius: 100,
+  //   position: 'absolute',
+  //   top: -40,
+  //   left: 20,
+  // },
   name: {
     fontSize: 28,
     fontWeight: '700',
