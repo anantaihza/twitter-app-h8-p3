@@ -11,6 +11,7 @@ import {
   Keyboard,
   TouchableHighlight,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import { REGISTER } from '../queries/query';
 import Toast from 'react-native-root-toast';
@@ -109,7 +110,11 @@ export default function Register() {
           />
 
           <TouchableHighlight onPress={handleRegister} style={styles.btnSolid}>
-            <Text style={styles.btnTextSolid}>Register</Text>
+            {loading ? (
+              <ActivityIndicator size={'small'} />
+            ) : (
+              <Text style={styles.btnTextSolid}>Register</Text>
+            )}
           </TouchableHighlight>
         </View>
 

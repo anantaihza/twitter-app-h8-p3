@@ -1,4 +1,11 @@
-import { Text, StyleSheet, View, Image, ScrollView } from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  View,
+  Image,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
 import { useQuery } from '@apollo/client';
 import { GET_POST_ID, GET_POSTS, ADD_COMMENT } from '../queries/query';
 import InputComments from '../components/InputComments';
@@ -17,8 +24,14 @@ export default function DetailPost({ route }) {
 
   if (loading) {
     return (
-      <View>
-        <Text>Loading</Text>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <ActivityIndicator size={'large'} />
       </View>
     );
   }

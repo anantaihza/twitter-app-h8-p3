@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Toast from 'react-native-root-toast';
-import { StyleSheet, Text } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text } from 'react-native';
 import { ADD_LIKE, GET_POSTS } from '../queries/query';
 import { useMutation } from '@apollo/client';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -29,6 +29,7 @@ export default function InputLike({ postId }) {
         backgroundColor: '#4C9EEB',
         textColor: '#FFFFFF',
       });
+      setIsLike((like) => !like);
     } catch (error) {
       console.log(error);
       if (error?.message) {
@@ -44,17 +45,22 @@ export default function InputLike({ postId }) {
         });
       }
     }
-    setIsLike((like) => !like)
   };
 
   return (
-    <Text style={styles.postItemAction} onPress={handleLike}>
-      {isLike ? (
-        <AntDesign name="heart" size={16} color="#4C9EEB" />
+    <>
+      {loading ? (
+        <ActivityIndicator size={'small'} />
       ) : (
-        <AntDesign name="hearto" size={16} color="#0C0C0C" />
+        <Text style={styles.postItemAction} onPress={handleLike}>
+          {isLike ? (
+            <AntDesign name="heart" size={16} color="#4C9EEB" />
+          ) : (
+            <AntDesign name="hearto" size={16} color="#0C0C0C" />
+          )}
+        </Text>
       )}
-    </Text>
+    </>
   );
 }
 

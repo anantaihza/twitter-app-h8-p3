@@ -6,6 +6,7 @@ import {
   View,
   TextInput,
   TouchableHighlight,
+  ActivityIndicator,
 } from 'react-native';
 import { ADD_POST, GET_POSTS } from '../queries/query';
 import { useNavigation } from '@react-navigation/native';
@@ -122,7 +123,11 @@ export default function CreatePost() {
         />
 
         <TouchableHighlight onPress={handleCreate} style={styles.btnSolid}>
-          <Text style={styles.btnTextSolid}>Tweet</Text>
+          {loading ? (
+            <ActivityIndicator size={'small'} />
+          ) : (
+            <Text style={styles.btnTextSolid}>Tweet</Text>
+          )}
         </TouchableHighlight>
       </View>
     </View>

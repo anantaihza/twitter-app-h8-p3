@@ -1,5 +1,10 @@
 import Toast from 'react-native-root-toast';
-import { StyleSheet, Text, TouchableHighlight } from 'react-native';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+} from 'react-native';
 import { useMutation } from '@apollo/client';
 import { ADD_FOLLOW, GET_USER_ID } from '../queries/query';
 
@@ -48,7 +53,11 @@ export default function ButtonFollow({ followId }) {
       underlayColor="#4C9EEB"
       onPress={handleFollow}
     >
-      <Text style={styles.textFollow}>Follow</Text>
+      {loading ? (
+        <ActivityIndicator size={'small'} />
+      ) : (
+        <Text style={styles.textFollow}>Follow</Text>
+      )}
     </TouchableHighlight>
   );
 }

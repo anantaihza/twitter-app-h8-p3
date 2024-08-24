@@ -11,6 +11,7 @@ import {
   Keyboard,
   TouchableHighlight,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 
 import Toast from 'react-native-root-toast';
@@ -95,7 +96,11 @@ export default function Login() {
           />
 
           <TouchableHighlight onPress={handleLogin} style={styles.btnSolid}>
-            <Text style={styles.btnTextSolid}>Login</Text>
+            {loading ? (
+              <ActivityIndicator size={'small'} />
+            ) : (
+              <Text style={styles.btnTextSolid}>Login</Text>
+            )}
           </TouchableHighlight>
         </View>
         <TouchableHighlight

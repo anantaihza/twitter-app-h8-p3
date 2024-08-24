@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Toast from 'react-native-root-toast';
 import {
+  ActivityIndicator,
   StyleSheet,
   Text,
   TextInput,
@@ -59,7 +60,11 @@ export default function InputComments({ postId }) {
         activeOpacity={0.5}
       >
         <Text style={styles.btnText}>
-          <Ionicons name="send" size={24} color="#4C9EEB" />
+          {loading ? (
+            <ActivityIndicator size={'small'} />
+          ) : (
+            <Ionicons name="send" size={24} color="#4C9EEB" />
+          )}
         </Text>
       </TouchableHighlight>
     </View>
