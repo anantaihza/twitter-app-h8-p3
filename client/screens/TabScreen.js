@@ -9,6 +9,7 @@ import Profile from './Profile';
 import * as SecureStore from 'expo-secure-store';
 import { AuthContext } from '../contexts/AuthContext';
 import { useContext } from 'react';
+import Toast from 'react-native-root-toast';
 
 const Tab = createBottomTabNavigator();
 
@@ -20,6 +21,16 @@ export default function TabScreen() {
       await SecureStore.deleteItemAsync('access_token');
 
       setIsSignedIn(false);
+      Toast.show('You logged out', {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+        delay: 0,
+        backgroundColor: '#4C9EEB',
+        textColor: '#FFFFFF',
+      });
     } catch (error) {
       console.log(error);
     }

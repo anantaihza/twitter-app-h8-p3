@@ -13,6 +13,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { REGISTER } from '../queries/query';
+import Toast from 'react-native-root-toast';
 
 export default function Register() {
   const navigation = useNavigation();
@@ -40,8 +41,30 @@ export default function Register() {
           },
         },
       });
+      Toast.show('Success to create account!', {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+        delay: 0,
+        backgroundColor: '#4C9EEB',
+        textColor: '#FFFFFF',
+      });
     } catch (error) {
       console.log(error);
+      if (error?.message) {
+        Toast.show(error.message, {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+          shadow: true,
+          animation: true,
+          hideOnPress: true,
+          delay: 0,
+          backgroundColor: '#4C9EEB',
+          textColor: '#FFFFFF',
+        });
+      }
     }
   };
 

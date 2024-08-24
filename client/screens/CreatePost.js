@@ -15,10 +15,11 @@ import {
 } from 'react-native';
 import { ADD_POST, GET_POSTS } from '../queries/query';
 import { useNavigation } from '@react-navigation/native';
+import Toast from 'react-native-root-toast';
 
 export default function CreatePost() {
   const navigation = useNavigation();
-  const [content, setContent] = useState('Post Example 1');
+  const [content, setContent] = useState('');
 
   const [inputTag, setInputTag] = useState('');
   const [tags, setTags] = useState([]);
@@ -26,9 +27,7 @@ export default function CreatePost() {
   // const [tag, setTag] = useState('');
   // const [tagss, setTagss] = useState([]);
 
-  const [imgUrl, setImgUrl] = useState(
-    'https://cdn0-production-images-kly.akamaized.net/Xc1138UZHofwKdQQRH1C4O0t9EE=/800x450/smart/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/892150/original/048455900_1433335401-kucingmelet5.jpg'
-  );
+  const [imgUrl, setImgUrl] = useState('');
 
   const [addPost, { data, loading, error }] = useMutation(ADD_POST, {
     refetchQueries: [GET_POSTS],
@@ -37,15 +36,39 @@ export default function CreatePost() {
 
   const handleCreate = async () => {
     try {
-      await addPost({
-        variables: {
-          newPost: {
-            content,
-            tags,
-            imgUrl,
+      if (content !== '') {
+        await addPost({
+          variables: {
+            newPost: {
+              content,
+              tags,
+              imgUrl,
+            },
           },
-        },
-      });
+        });
+
+        Toast.show('Success to add new tweet', {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+          shadow: true,
+          animation: true,
+          hideOnPress: true,
+          delay: 0,
+          backgroundColor: '#4C9EEB',
+          textColor: '#FFFFFF',
+        });
+      } else {
+        Toast.show('Write your tweet first!', {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+          shadow: true,
+          animation: true,
+          hideOnPress: true,
+          delay: 0,
+          backgroundColor: '#4C9EEB',
+          textColor: '#FFFFFF',
+        });
+      }
     } catch (error) {
       console.log(error);
     }

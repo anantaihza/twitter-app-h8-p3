@@ -3,6 +3,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { ADD_LIKE, GET_POSTS, GET_POST_ID } from '../queries/query';
+import Toast from 'react-native-root-toast';
 
 export default function InputLike({ postId }) {
   const [isLike, setIsLike] = useState(false);
@@ -18,8 +19,30 @@ export default function InputLike({ postId }) {
           postId,
         },
       });
+      Toast.show('You liked this tweet', {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+        delay: 0,
+        backgroundColor: '#4C9EEB',
+        textColor: '#FFFFFF',
+      });
     } catch (error) {
       console.log(error);
+      if (error?.message) {
+        Toast.show(error.message, {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+          shadow: true,
+          animation: true,
+          hideOnPress: true,
+          delay: 0,
+          backgroundColor: '#4C9EEB',
+          textColor: '#FFFFFF',
+        });
+      }
     }
     // setIsLike((like) => !like)
   };

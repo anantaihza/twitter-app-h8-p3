@@ -6,14 +6,17 @@ import MainStack from './screens/MainStack';
 import { ApolloProvider } from '@apollo/client';
 import client from './config/apollo';
 import AuthProvider from './contexts/AuthContext';
+import { RootSiblingParent } from 'react-native-root-siblings';
 
 export default function App() {
   return (
-    <AuthProvider>
-      <ApolloProvider client={client}>
-        <MainStack />
-      </ApolloProvider>
-    </AuthProvider>
+    <RootSiblingParent>
+      <AuthProvider>
+        <ApolloProvider client={client}>
+          <MainStack />
+        </ApolloProvider>
+      </AuthProvider>
+    </RootSiblingParent>
   );
 }
 

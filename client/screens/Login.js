@@ -12,6 +12,8 @@ import {
   TouchableHighlight,
   ScrollView,
 } from 'react-native';
+
+import Toast from 'react-native-root-toast';
 import { LOGIN } from '../queries/query';
 import * as SecureStore from 'expo-secure-store';
 
@@ -21,8 +23,8 @@ export default function Login() {
   const navigation = useNavigation();
   const { setIsSignedIn } = useContext(AuthContext);
 
-  const [email, setEmail] = useState('user1@mail.com');
-  const [password, setPassword] = useState('1234');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const [login, { data, loading, error }] = useMutation(LOGIN);
 
@@ -35,14 +37,35 @@ export default function Login() {
           password,
         },
       });
-
-      // console.log(res.data.Login.access_token, "<-res login ")
       const token = res.data.Login.access_token;
-      await SecureStore.setItemAsync("access_token", token)
+      await SecureStore.setItemAsync('access_token', token);
 
       setIsSignedIn(true);
+
+      Toast.show('Login Success!', {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+        delay: 0,
+        backgroundColor: '#4C9EEB',
+        textColor: '#FFFFFF',
+      });
     } catch (error) {
       console.log(error);
+      if (error?.message) {
+        Toast.show(error.message, {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+          shadow: true,
+          animation: true,
+          hideOnPress: true,
+          delay: 0,
+          backgroundColor: '#4C9EEB',
+          textColor: '#FFFFFF',
+        });
+      }
     }
   };
 

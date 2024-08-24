@@ -19,19 +19,17 @@ export default function Search() {
   const navigation = useNavigation();
   const [search, setSearch] = useState('');
   const [getSearch, { data, loading, error }] = useLazyQuery(SEARCH);
-  // const { data, loading, error, refetch } = useQuery(SEARCH, {
-  //   // manual: true,
-  //   variables: {
-  //     search: search === '' ? null : search,
-  //   },
-  // });
 
   const handleSearch = async () => {
-    await getSearch({
-      variables: {
-        search: search === '' ? null : search,
-      },
-    });
+    try {
+      await getSearch({
+        variables: {
+          search: search === '' ? null : search,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleUser = (userId) => {
