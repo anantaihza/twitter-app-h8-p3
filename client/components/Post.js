@@ -30,7 +30,7 @@ export default function Post({ post }) {
               uri: 'https://static.thenounproject.com/png/363639-200.png',
             }}
           />
-          <View style={{flex: 1 }}>
+          <View style={{ flex: 1 }}>
             <View style={styles.postAuthor}>
               <Text style={styles.authorName}>{post?.author.name}</Text>
               <Text style={styles.authorUsername}>

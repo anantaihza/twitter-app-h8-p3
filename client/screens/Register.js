@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import { useNavigation } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   Text,
   StyleSheet,
@@ -67,10 +67,6 @@ export default function Register() {
       }
     }
   };
-
-  // useEffect(() => {
-  //   console.log(name)
-  // }, [name])
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -173,8 +169,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 80,
     marginBottom: 20,
-    // position: "relative",
-    // bottom: -50,
   },
   btnTextSolid: {
     color: '#FFFFFF',

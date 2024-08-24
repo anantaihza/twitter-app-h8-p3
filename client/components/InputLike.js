@@ -1,9 +1,9 @@
+import { useState } from 'react';
+import Toast from 'react-native-root-toast';
+import { StyleSheet, Text } from 'react-native';
+import { ADD_LIKE, GET_POSTS } from '../queries/query';
 import { useMutation } from '@apollo/client';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { ADD_LIKE, GET_POSTS, GET_POST_ID } from '../queries/query';
-import Toast from 'react-native-root-toast';
 
 export default function InputLike({ postId }) {
   const [isLike, setIsLike] = useState(false);
@@ -44,12 +44,8 @@ export default function InputLike({ postId }) {
         });
       }
     }
-    // setIsLike((like) => !like)
+    setIsLike((like) => !like)
   };
-
-  // useEffect(() => {
-
-  // }, [likes])
 
   return (
     <Text style={styles.postItemAction} onPress={handleLike}>

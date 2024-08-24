@@ -5,13 +5,7 @@ import {
   StyleSheet,
   View,
   TextInput,
-  Image,
-  TouchableWithoutFeedback,
-  Keyboard,
   TouchableHighlight,
-  ScrollView,
-  Button,
-  FlatList,
 } from 'react-native';
 import { ADD_POST, GET_POSTS } from '../queries/query';
 import { useNavigation } from '@react-navigation/native';
@@ -23,9 +17,6 @@ export default function CreatePost() {
 
   const [inputTag, setInputTag] = useState('');
   const [tags, setTags] = useState([]);
-
-  // const [tag, setTag] = useState('');
-  // const [tagss, setTagss] = useState([]);
 
   const [imgUrl, setImgUrl] = useState('');
 
@@ -148,7 +139,6 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: '700',
     marginTop: 20,
-    // textAlign: "center"
   },
   form: {
     marginTop: 20,
@@ -211,7 +201,6 @@ const styles = StyleSheet.create({
   pill: {
     paddingHorizontal: 15,
     paddingVertical: 5,
-    // borderWidth: 1,
     backgroundColor: '#4C9EEB',
     borderRadius: 50,
   },

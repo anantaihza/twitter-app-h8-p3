@@ -3,15 +3,12 @@ import {
   StyleSheet,
   View,
   TextInput,
-  Image,
-  TouchableWithoutFeedback,
-  Keyboard,
   TouchableHighlight,
   FlatList,
 } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useState } from 'react';
-import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { SEARCH } from '../queries/query';
 import { useNavigation } from '@react-navigation/native';
 

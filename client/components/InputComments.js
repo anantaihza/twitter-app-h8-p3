@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import Toast from 'react-native-root-toast';
 import {
   StyleSheet,
   Text,
@@ -5,11 +7,9 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
+import { useMutation } from '@apollo/client';
 import { GET_POSTS, ADD_COMMENT } from '../queries/query';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useMutation } from '@apollo/client';
-import { useState } from 'react';
-import Toast from 'react-native-root-toast';
 
 export default function InputComments({ postId }) {
   const [content, setContent] = useState('');
@@ -20,7 +20,7 @@ export default function InputComments({ postId }) {
 
   const handleComment = async () => {
     try {
-      if (content !== "") {
+      if (content !== '') {
         await addComment({
           variables: {
             content,
@@ -28,7 +28,7 @@ export default function InputComments({ postId }) {
           },
         });
       }
-      setContent("")
+      setContent('');
       Toast.show('Add comment success', {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
@@ -49,7 +49,6 @@ export default function InputComments({ postId }) {
       <TextInput
         style={styles.input}
         placeholder="Type comment...."
-        // keyboardType=""
         value={content}
         onChangeText={(text) => setContent(text)}
         onSubmitEditing={handleComment}

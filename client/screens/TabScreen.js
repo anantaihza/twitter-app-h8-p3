@@ -2,10 +2,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from './Home';
 import Search from './Search';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Image, StyleSheet, Text, TouchableHighlight } from 'react-native';
-import Profile from './Profile';
 import * as SecureStore from 'expo-secure-store';
 import { AuthContext } from '../contexts/AuthContext';
 import { useContext } from 'react';
@@ -50,7 +48,12 @@ export default function TabScreen() {
           },
           headerRight: () => {
             return (
-              <TouchableHighlight onPress={handleLogout} style={styles.btnLogout} underlayColor="none" activeOpacity={0.5}>
+              <TouchableHighlight
+                onPress={handleLogout}
+                style={styles.btnLogout}
+                underlayColor="none"
+                activeOpacity={0.5}
+              >
                 <Text>Log out</Text>
               </TouchableHighlight>
             );
@@ -127,6 +130,6 @@ export default function TabScreen() {
 
 const styles = StyleSheet.create({
   btnLogout: {
-    marginHorizontal: 20
-  }
-})
+    marginHorizontal: 20,
+  },
+});

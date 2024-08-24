@@ -29,7 +29,6 @@ export default function Login() {
   const [login, { data, loading, error }] = useMutation(LOGIN);
 
   const handleLogin = async () => {
-    // navigation.navigate('Tab');
     try {
       const res = await login({
         variables: {
@@ -115,7 +114,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 30,
     backgroundColor: '#FFFFFF',
-    // position: 'relative',
   },
   logo: {
     marginHorizontal: 'auto',

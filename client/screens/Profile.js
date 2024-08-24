@@ -1,21 +1,9 @@
-import { useMutation, useQuery } from '@apollo/client';
-import {
-  Text,
-  StyleSheet,
-  View,
-  TextInput,
-  Image,
-  TouchableWithoutFeedback,
-  Keyboard,
-  TouchableHighlight,
-  ScrollView,
-} from 'react-native';
-import { ADD_FOLLOW, GET_USER_ID } from '../queries/query';
-import { useNavigation } from '@react-navigation/native';
+import { useQuery } from '@apollo/client';
+import { Text, StyleSheet, View, ScrollView } from 'react-native';
+import { GET_USER_ID } from '../queries/query';
 import ButtonFollow from '../components/ButtonFollow';
 
 export default function Profile({ route }) {
-  const navigation = useNavigation()
   const { userId } = route.params;
 
   const { data, loading, error } = useQuery(GET_USER_ID, {
@@ -28,8 +16,6 @@ export default function Profile({ route }) {
     <ScrollView>
       <View style={styles.banner}></View>
       <View style={styles.containerProfile}>
-        {/* <Text>{JSON.stringify(data?.GetUser)}</Text> */}
-
         <View style={styles.avatar}></View>
         <View>
           <Text style={styles.name}>{data?.GetUser?.name}</Text>
@@ -45,13 +31,6 @@ export default function Profile({ route }) {
             Followers
           </Text>
         </View>
-        {/* <TouchableHighlight
-          style={styles.btnFollow}
-          underlayColor="#4C9EEB"
-          onPress={handleFollow}
-        >
-          <Text style={styles.textFollow}>Follow</Text>
-        </TouchableHighlight> */}
         <ButtonFollow followId={data?.GetUser?._id} />
       </View>
     </ScrollView>

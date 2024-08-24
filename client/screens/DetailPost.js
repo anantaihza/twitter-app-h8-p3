@@ -1,19 +1,8 @@
-import {
-  Text,
-  StyleSheet,
-  View,
-  TextInput,
-  Image,
-  TouchableWithoutFeedback,
-  Keyboard,
-  TouchableHighlight,
-  ScrollView,
-} from 'react-native';
+import { Text, StyleSheet, View, Image, ScrollView } from 'react-native';
 import { useQuery } from '@apollo/client';
 import { GET_POST_ID, GET_POSTS, ADD_COMMENT } from '../queries/query';
 import InputComments from '../components/InputComments';
 import InputLike from '../components/InputLike';
-// import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 export default function DetailPost({ route }) {
   const { post } = route.params;
@@ -82,14 +71,11 @@ export default function DetailPost({ route }) {
               Comments
             </Text>
           </View>
-
-          {/* <View style={styles.postAction}></View> */}
         </View>
         <View style={styles.action}>
           <InputLike postId={post._id} />
         </View>
         <View style={styles.sectionComments}>
-          {/* <Text style={styles.headComment}>Comments: </Text> */}
           {data?.post?.comments.map((comment, index) => {
             return (
               <View key={index} style={styles.listComment}>
@@ -128,8 +114,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingTop: 20,
     paddingBottom: 5,
-    // borderBottomWidth: 0.6,
-    // borderColor: '#DADADA',
   },
   authorName: {
     fontSize: 25,
@@ -144,7 +128,6 @@ const styles = StyleSheet.create({
   postTags: {
     flexDirection: 'row',
     gap: 10,
-    // marginTop: 10,
     marginBottom: 12,
     flexWrap: 'wrap',
   },
@@ -190,7 +173,6 @@ const styles = StyleSheet.create({
   },
 
   action: {
-    // borderTopWidth: 0.3,
     borderBottomWidth: 0.3,
     borderColor: '#9D9D9D',
     backgroundColor: '#FFFFFF',
@@ -228,7 +210,6 @@ const styles = StyleSheet.create({
     color: '#9D9D9D',
   },
   commentContent: {
-    // color: '#9D9D9D',
-    marginTop: 10
+    marginTop: 10,
   },
 });
