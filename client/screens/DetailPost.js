@@ -38,15 +38,23 @@ export default function DetailPost({ route }) {
     <>
       <ScrollView style={styles.containerDetail}>
         <View style={styles.post}>
-          <View>
-            <Text style={styles.authorName}>{data?.post?.author.name}</Text>
-            <Text style={styles.authorUsername}>
-              @{data?.post?.author.username}
-            </Text>
+          <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
+            <Image
+              style={{ width: 50, height: 50 }}
+              source={{
+                uri: 'https://static.thenounproject.com/png/363639-200.png',
+              }}
+            />
+            <View>
+              <Text style={styles.authorName}>{data?.post?.author.name}</Text>
+              <Text style={styles.authorUsername}>
+                @{data?.post?.author.username}
+              </Text>
+            </View>
           </View>
+
           <Text style={styles.contentDetail}>{data?.post?.content}</Text>
 
-          
           <View>
             {data?.post?.imgUrl ? (
               <Image
@@ -66,7 +74,9 @@ export default function DetailPost({ route }) {
             })}
           </View>
           <View style={styles.postCount}>
-            <InputLike likes={data?.post?.likes} postId={post._id} />
+            <Text style={styles.itemCount}>
+              <Text style={styles.count}>{data?.post?.likes.length}</Text> Likes
+            </Text>
             <Text style={styles.itemCount}>
               <Text style={styles.count}>{data?.post?.comments.length}</Text>{' '}
               Comments
@@ -75,13 +85,30 @@ export default function DetailPost({ route }) {
 
           {/* <View style={styles.postAction}></View> */}
         </View>
+        <View style={styles.action}>
+          <InputLike postId={post._id} />
+        </View>
         <View style={styles.sectionComments}>
           {/* <Text style={styles.headComment}>Comments: </Text> */}
           {data?.post?.comments.map((comment, index) => {
             return (
               <View key={index} style={styles.listComment}>
-                <Text style={styles.commentHeader}>{comment.username}</Text>
-                <Text style={styles.commentContent}>{comment.content}</Text>
+                <Image
+                  style={{ width: 35, height: 35 }}
+                  source={{
+                    uri: 'https://static.thenounproject.com/png/363639-200.png',
+                  }}
+                />
+                <View style={{ paddingHorizontal: 10 }}>
+                  <Text style={styles.commentHeader}>{comment.username}</Text>
+                  <Text style={styles.commentReply}>
+                    Replying to{' '}
+                    <Text style={{ color: '#4C9EEB' }}>
+                      @{data?.post?.author.username}
+                    </Text>
+                  </Text>
+                  <Text style={styles.commentContent}>{comment.content}</Text>
+                </View>
               </View>
             );
           })}
@@ -99,12 +126,13 @@ const styles = StyleSheet.create({
   post: {
     backgroundColor: '#FFFFFF',
     paddingHorizontal: 30,
-    paddingVertical: 20,
-    borderBottomWidth: 1,
-    borderColor: '#DADADA',
+    paddingTop: 20,
+    paddingBottom: 5,
+    // borderBottomWidth: 0.6,
+    // borderColor: '#DADADA',
   },
   authorName: {
-    fontSize: 30,
+    fontSize: 25,
     lineHeight: 30,
     fontWeight: '700',
   },
@@ -119,11 +147,10 @@ const styles = StyleSheet.create({
     // marginTop: 10,
     marginBottom: 12,
     flexWrap: 'wrap',
-
   },
   contentDetail: {
     marginTop: 20,
-    marginBottom: 10
+    marginBottom: 10,
   },
   itemTag: {
     paddingHorizontal: 10,
@@ -143,6 +170,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 20,
     gap: 20,
+    borderTopWidth: 0.2,
+    borderBottomWidth: 0.2,
+    borderColor: '#9D9D9D',
+    paddingVertical: 20,
   },
   itemCount: {
     fontWeight: '700',
@@ -156,6 +187,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 20,
     alignItems: 'center',
+  },
+
+  action: {
+    // borderTopWidth: 0.3,
+    borderBottomWidth: 0.3,
+    borderColor: '#9D9D9D',
+    backgroundColor: '#FFFFFF',
+    paddingTop: 10,
+    alignItems: 'center',
+    paddingBottom: 15,
   },
 
   // Comment
@@ -172,13 +213,22 @@ const styles = StyleSheet.create({
   listComment: {
     paddingHorizontal: 40,
     paddingVertical: 16,
-    // backgroundColor: '#FFFFFF',
+    backgroundColor: '#FFFFFF',
+    borderBottomWidth: 0.3,
+    borderColor: '#9D9D9D',
+    flexDirection: 'row',
+    gap: 10,
+    alignItems: 'center',
   },
   commentHeader: {
     fontWeight: '700',
     fontSize: 16,
   },
-  commentContent: {
+  commentReply: {
     color: '#9D9D9D',
+  },
+  commentContent: {
+    // color: '#9D9D9D',
+    marginTop: 10
   },
 });

@@ -23,41 +23,55 @@ export default function Post({ post }) {
       activeOpacity={0.95}
     >
       <View style={styles.postContainer}>
-        <View style={styles.postAuthor}>
-          <Text style={styles.authorName}>{post?.author.name}</Text>
+        <View style={{ flexDirection: 'row', gap: 10 }}>
+          <Image
+            style={{ width: 40, height: 40 }}
+            source={{
+              uri: 'https://static.thenounproject.com/png/363639-200.png',
+            }}
+          />
+          <View style={{flex: 1 }}>
+            <View style={styles.postAuthor}>
+              <Text style={styles.authorName}>{post?.author.name}</Text>
+              <Text style={styles.authorUsername}>
+                @{post?.author.username}
+              </Text>
+            </View>
 
-          <Text style={styles.authorUsername}>@{post?.author.username}</Text>
-        </View>
+            <Text style={styles.postContent}>{post?.content}</Text>
 
-        <Text style={styles.postContent}>{post?.content}</Text>
-
-        <View style={styles.postTags}>
-          {post?.tags.map((tag, index) => {
-            return (
-              <View key={index} style={styles.itemTag}>
-                <Text>{tag}</Text>
-              </View>
-            );
-          })}
-        </View>
-        <View>
-          {post?.imgUrl ? (
-            <Image source={{ uri: post?.imgUrl }} style={styles.postImage} />
-          ) : null}
-        </View>
-        <View style={styles.postAction}>
-          <Text style={styles.postItemAction}>
-            {false ? (
-              <AntDesign name="heart" size={16} color="#4C9EEB" />
-            ) : (
-              <AntDesign name="hearto" size={16} color="#0C0C0C" />
-            )}{' '}
-            {post?.likes.length}
-          </Text>
-          <Text style={styles.postItemAction}>
-            <FontAwesome name="comment-o" size={17} color="#0C0C0C" />{' '}
-            {post?.comments.length}
-          </Text>
+            <View style={styles.postTags}>
+              {post?.tags.map((tag, index) => {
+                return (
+                  <View key={index} style={styles.itemTag}>
+                    <Text>{tag}</Text>
+                  </View>
+                );
+              })}
+            </View>
+            <View>
+              {post?.imgUrl ? (
+                <Image
+                  source={{ uri: post?.imgUrl }}
+                  style={styles.postImage}
+                />
+              ) : null}
+            </View>
+            <View style={styles.postAction}>
+              <Text style={styles.postItemAction}>
+                {false ? (
+                  <AntDesign name="heart" size={16} color="#4C9EEB" />
+                ) : (
+                  <AntDesign name="hearto" size={16} color="#0C0C0C" />
+                )}{' '}
+                {post?.likes.length}
+              </Text>
+              <Text style={styles.postItemAction}>
+                <FontAwesome name="comment-o" size={17} color="#0C0C0C" />{' '}
+                {post?.comments.length}
+              </Text>
+            </View>
+          </View>
         </View>
       </View>
     </TouchableHighlight>
@@ -69,7 +83,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.3,
     borderColor: '#DADADA',
     backgroundColor: '#FFFFFF',
-    paddingHorizontal: 30,
+    paddingHorizontal: 20,
     paddingVertical: 20,
   },
   postTags: {
@@ -77,7 +91,6 @@ const styles = StyleSheet.create({
     gap: 10,
     marginVertical: 14,
     flexWrap: 'wrap',
-
   },
   itemTag: {
     paddingHorizontal: 10,
@@ -88,12 +101,12 @@ const styles = StyleSheet.create({
   },
   postAuthor: {
     flexDirection: 'row',
-    gap: 10,
-    marginBottom: 10,
+    gap: 6,
+    marginBottom: 6,
     alignItems: 'center',
   },
   postContent: {
-    marginTop: 6
+    marginTop: 6,
   },
   authorName: {
     fontSize: 20,
