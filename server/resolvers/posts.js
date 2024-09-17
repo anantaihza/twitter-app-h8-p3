@@ -1,5 +1,5 @@
 const { ObjectId } = require('mongodb');
-const redis = require('../config/redisConfig');
+// const redis = require('../config/redisConfig');
 
 // const posts = [];
 const resolvers = {
@@ -12,10 +12,10 @@ const resolvers = {
 
       // console.log(user)
 
-      const postsCache = await redis.get('post:all');
-      if (postsCache) {
-        return JSON.parse(postsCache);
-      }
+      // const postsCache = await redis.get('post:all');
+      // if (postsCache) {
+      //   return JSON.parse(postsCache);
+      // }
 
       const agg = [
         {
@@ -46,7 +46,7 @@ const resolvers = {
       ];
 
       const posts = await db.collection('Posts').aggregate(agg).toArray();
-      await redis.set('post:all', JSON.stringify(posts));
+      // await redis.set('post:all', JSON.stringify(posts));
 
       return posts;
     },
@@ -113,7 +113,7 @@ const resolvers = {
       };
 
       const data = await db.collection('Posts').insertOne(dataNewPost);
-      await redis.del('post:all');
+      // await redis.del('post:all');
 
       // console.log(data)
 
@@ -142,7 +142,7 @@ const resolvers = {
           { $push: { comments: dataComment } }
         );
 
-      await redis.del('post:all');
+      // await redis.del('post:all');
 
       // console.log(data);
 
@@ -182,7 +182,7 @@ const resolvers = {
           { $push: { likes: dataLike } }
         );
 
-      await redis.del('post:all');
+      // await redis.del('post:all');
 
       return dataLike;
     },

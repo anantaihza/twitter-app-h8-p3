@@ -12,7 +12,8 @@ import { setContext } from '@apollo/client/link/context';
 import * as SecureStore from 'expo-secure-store';
 
 const httpLink = new createHttpLink({
-  uri: 'https://31a3-2001-448a-50e0-988a-40cb-2518-394e-638b.ngrok-free.app',
+  uri: 'https://cdf9-2001-448a-50e0-29a-c010-dc67-d729-bbf1.ngrok-free.app',
+  // uri: 'http://localhost:4000/'
   // uri: 'https://twitter-clone.anantair.my.id',
 });
 
